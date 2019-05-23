@@ -47,6 +47,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
+
             <version>${vaadin.version}</version>
         </dependency>
         <dependency>
@@ -83,7 +84,7 @@
         <resources>
             <resource>
                 <directory>
-                    src/sqlresources
+                    src/resources
                 </directory>
             </resource>
         </resources>
@@ -124,14 +125,21 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>${project.build.directory}/classes/webapp/WEB-INF/web.xml</webXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.16.v20140903</version>
                 <configuration>
-
-                    <webXml>
-                        src/webapp/WEB-INF/web.xml
-                    </webXml>
+                    <webAppSourceDirectory>${project.build.directory}/classes/webapp</webAppSourceDirectory>
+                    <stopPort/>
+                    <stopKey/>
                 </configuration>
             </plugin>
 
