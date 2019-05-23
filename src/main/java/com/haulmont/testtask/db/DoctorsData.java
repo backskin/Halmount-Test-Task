@@ -1,7 +1,8 @@
-package com.haulmont.testtask.model.db;
+package com.haulmont.testtask.db;
 
-import com.haulmont.testtask.model.entities.Doctor;
-
+import com.haulmont.testtask.model.Doctor;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,23 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
     public List<Doctor> getAll() {
 
         List<Doctor> out = new ArrayList<>();
-        return null;
+
+        try {
+            ResultSet rs = sendQuery("SELECT * FROM doctors");
+
+            while (rs.next()){
+                out.add(new Doctor(
+                        Long.parseLong(rs.getString(1)),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return out;
     }
 
     @Override
@@ -32,7 +49,6 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
     public boolean delete(Long id) {
         return false;
     }
-
 
     @Override
     public boolean create(Doctor entity) {

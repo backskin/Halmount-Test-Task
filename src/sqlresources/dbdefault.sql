@@ -1,0 +1,23 @@
+CREATE TABLE doctors (
+id BIGINT IDENTITY PRIMARY KEY,
+firstname VARCHAR(255),
+lastname VARCHAR(255),
+dadsname VARCHAR(255),
+speciality VARCHAR(255)
+);
+
+CREATE TABLE patients (
+id BIGINT IDENTITY PRIMARY KEY,
+firstname VARCHAR(255),
+lastname VARCHAR(255),
+dadsname VARCHAR(255),
+phone VARCHAR(255),
+);
+
+CREATE TABLE receipts (
+id BIGINT IDENTITY PRIMARY KEY,
+docID BIGINT,
+patientID BIGINT,
+FOREIGN KEY (docID) REFERENCES doctors(id),
+FOREIGN KEY (patientID) REFERENCES patients(id)
+);

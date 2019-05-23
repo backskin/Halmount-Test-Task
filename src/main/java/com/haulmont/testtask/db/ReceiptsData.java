@@ -1,6 +1,6 @@
-package com.haulmont.testtask.model.db;
+package com.haulmont.testtask.db;
 
-import com.haulmont.testtask.model.entities.Receipt;
+import com.haulmont.testtask.model.Receipt;
 
 import java.util.List;
 

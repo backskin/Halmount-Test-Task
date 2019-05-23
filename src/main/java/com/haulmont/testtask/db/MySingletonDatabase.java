@@ -1,4 +1,5 @@
-package com.haulmont.testtask.model.db;
+package com.haulmont.testtask.db;
+
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
 
@@ -7,7 +8,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 
 public class MySingletonDatabase {
@@ -17,8 +17,9 @@ public class MySingletonDatabase {
 
     private MySingletonDatabase(){
         try {
-            Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:testdb", "SA", "");
+            Class.forName("org.hsqldb.jdbcDriver");
+            connection = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "");
+            loadDefault();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(System.out);
@@ -29,17 +30,25 @@ public class MySingletonDatabase {
 
         if (instance == null) {
             instance = new MySingletonDatabase();
-            instance.setup();
+
         }
         return instance;
     }
 
-    private void setup() {
+    private void loadDefault(){
+
+        loadScriptResource("dbdefault.sql");
+        loadScriptResource("dbstack.sql");
+    }
+
+    public void loadScriptResource(String sqlscript) {
 
         try {
             SqlFile sf = new SqlFile(
                     new File(Objects.requireNonNull(getClass().getClassLoader()
-                            .getResource("dbdefault.sql")).getFile()));
+                            .getResource(sqlscript)).getFile()
+                    )
+            );
 
             sf.setConnection(connection);
             sf.execute();
@@ -49,7 +58,9 @@ public class MySingletonDatabase {
         }
     }
 
-    public Connection getConnetion() {
+
+
+    public Connection getConnection() {
         return connection;
     }
 }

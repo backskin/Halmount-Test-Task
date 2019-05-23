@@ -1,4 +1,4 @@
-package com.haulmont.testtask.model.entities;
+package com.haulmont.testtask.model;
 
 public class Patient extends Human {
 
