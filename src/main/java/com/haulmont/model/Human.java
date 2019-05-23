@@ -28,21 +28,15 @@ public abstract class Human {
         return (id == h.id);
     }
 
-    void setName(String firstName, String lastName, String dadsName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dadsName = dadsName;
-    }
-
-    void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    void setDadsName(String dadsName) {
+    public void setDadsName(String dadsName) {
         this.dadsName = dadsName;
     }
 

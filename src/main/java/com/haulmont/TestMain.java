@@ -16,7 +16,10 @@ public class TestMain {
             Statement st = database.getConnection().createStatement();
             ResultSet rs = st.executeQuery("select * from doctors");
             while (rs.next()){
-                System.out.println("ID: " + rs.getString(1) + ", title: " + rs.getString(2));
+                System.out.println("ID: " + rs.getString(1)
+                        + ", name: " + rs.getString(2)
+                        + " " + rs.getString(3)
+                        + " " + rs.getString(4));
             }
         } catch (SQLException e) {
             e.printStackTrace();

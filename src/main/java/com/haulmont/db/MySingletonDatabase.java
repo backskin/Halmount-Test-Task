@@ -30,15 +30,14 @@ public class MySingletonDatabase {
 
         if (instance == null) {
             instance = new MySingletonDatabase();
-
         }
         return instance;
     }
 
     private void loadDefault(){
 
-        loadScriptResource("dbdefault.sql");
-        loadScriptResource("dbstack.sql");
+        loadScriptResource("sql/dbdefault.sql");
+        loadScriptResource("sql/dbstack.sql");
     }
 
     public void loadScriptResource(String sqlscript) {

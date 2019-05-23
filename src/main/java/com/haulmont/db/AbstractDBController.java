@@ -6,15 +6,9 @@ import java.util.List;
 public abstract class AbstractDBController<E,K> {
 
     private MySingletonDatabase db;
-    private String tableName;
 
-    protected String getTableName() {
-        return tableName;
-    }
-
-    AbstractDBController(String tableName) {
+    AbstractDBController() {
         db = MySingletonDatabase.getInstance();
-        this.tableName = tableName;
     }
 
     public abstract List<E> getAll();
@@ -23,18 +17,12 @@ public abstract class AbstractDBController<E,K> {
     public abstract boolean delete(K id);
     public abstract boolean create(E entity);
 
-    protected ResultSet sendQuery(String sql) {
+    protected ResultSet sendQuery(String sql) throws SQLException {
 
         Statement statement;
-        try {
-            statement = db.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            statement.close();
-            return rs;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        statement = db.getConnection().createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        statement.close();
+        return rs;
     }
 }

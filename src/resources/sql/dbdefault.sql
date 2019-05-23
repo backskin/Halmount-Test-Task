@@ -16,6 +16,7 @@ phone VARCHAR(255),
 
 CREATE TABLE receipts (
 id BIGINT IDENTITY PRIMARY KEY,
+description VARCHAR(1024),
 docID BIGINT,
 patientID BIGINT,
 FOREIGN KEY (docID) REFERENCES doctors(id),
