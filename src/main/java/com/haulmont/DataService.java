@@ -1,9 +1,9 @@
-package com.haulmont.testtask;
+package com.haulmont;
 
-import com.haulmont.testtask.db.DoctorsData;
-import com.haulmont.testtask.db.PatientsData;
-import com.haulmont.testtask.db.ReceiptsData;
-import com.haulmont.testtask.model.Doctor;
+import com.haulmont.db.DoctorsData;
+import com.haulmont.db.PatientsData;
+import com.haulmont.db.ReceiptsData;
+import com.haulmont.model.Doctor;
 
 import java.util.List;
 

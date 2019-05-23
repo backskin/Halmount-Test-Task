@@ -1,4 +1,4 @@
-package com.haulmont.testtask.model;
+package com.haulmont.model;
 
 import java.util.Date;
 

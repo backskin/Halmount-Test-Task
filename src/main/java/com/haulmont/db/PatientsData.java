@@ -1,6 +1,6 @@
-package com.haulmont.testtask.db;
+package com.haulmont.db;
 
-import com.haulmont.testtask.model.Patient;
+import com.haulmont.model.Patient;
 
 import java.util.List;
 

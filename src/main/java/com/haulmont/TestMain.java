@@ -1,6 +1,6 @@
-package com.haulmont.testtask;
+package com.haulmont;
 
-import com.haulmont.testtask.db.MySingletonDatabase;
+import com.haulmont.db.MySingletonDatabase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

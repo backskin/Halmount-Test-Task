@@ -1,4 +1,4 @@
-package com.haulmont.testtask.db;
+package com.haulmont.db;
 
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;

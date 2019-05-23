@@ -1,6 +1,6 @@
-package com.haulmont.testtask;
+package com.haulmont;
 
-import com.haulmont.testtask.model.Doctor;
+import com.haulmont.model.Doctor;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
