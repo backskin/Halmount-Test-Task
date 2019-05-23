@@ -1,5 +1,6 @@
 package com.haulmont.testtask.model.db;
 import org.hsqldb.cmdline.SqlFile;
+import org.hsqldb.cmdline.SqlToolError;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class MySingletonDatabase {
 
@@ -35,10 +37,14 @@ public class MySingletonDatabase {
     private void setup() {
 
         try {
-            Statement st = connection.createStatement();
-            SqlFile sf = new SqlFile(new File(""));
+            SqlFile sf = new SqlFile(
+                    new File(Objects.requireNonNull(getClass().getClassLoader()
+                            .getResource("dbdefault.sql")).getFile()));
 
-        } catch (SQLException | IOException e) {
+            sf.setConnection(connection);
+            sf.execute();
+
+        } catch (SQLException | IOException | SqlToolError e) {
             e.printStackTrace();
         }
     }

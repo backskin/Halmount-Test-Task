@@ -4,11 +4,13 @@ import com.haulmont.testtask.model.db.DoctorsData;
 import com.haulmont.testtask.model.db.PatientsData;
 import com.haulmont.testtask.model.db.ReceiptsData;
 
-public class DataService {
+class DataService {
 
-    DoctorsData doctorsData;
-    PatientsData patientsData;
-    ReceiptsData receiptsData;
+    private DoctorsData doctorsData = new DoctorsData();
+    private PatientsData patientsData = new PatientsData();
+    private ReceiptsData receiptsData = new ReceiptsData();
+
+
 
 
 }

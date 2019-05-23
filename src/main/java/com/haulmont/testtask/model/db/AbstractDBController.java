@@ -6,9 +6,11 @@ import java.util.List;
 public abstract class AbstractDBController<E,K> {
 
     private MySingletonDatabase db;
+    private String tableName;
 
-    AbstractDBController() {
+    AbstractDBController(String tableName) {
         db = MySingletonDatabase.getInstance();
+        this.tableName = tableName;
     }
 
     public abstract List<E> getAll();

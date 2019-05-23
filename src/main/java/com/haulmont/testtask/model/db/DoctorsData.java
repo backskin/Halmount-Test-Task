@@ -8,7 +8,7 @@ import java.util.List;
 public class DoctorsData extends AbstractDBController<Doctor, Long> {
 
     public DoctorsData(){
-        super();
+        super("doctors");
     }
 
     @Override

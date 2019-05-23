@@ -8,6 +8,8 @@ import com.vaadin.ui.themes.ValoTheme;
 @Theme(ValoTheme.THEME_NAME)
 public class MainUI extends UI {
 
+    DataService dataService = new DataService();
+
     @Override
 
     protected void init(VaadinRequest request) {

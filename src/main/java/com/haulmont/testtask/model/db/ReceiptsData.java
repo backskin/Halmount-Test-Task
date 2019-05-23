@@ -7,7 +7,7 @@ import java.util.List;
 public class ReceiptsData extends AbstractDBController<Receipt, Long> {
 
     public ReceiptsData(){
-        super();
+        super("receipts");
     }
 
     @Override
