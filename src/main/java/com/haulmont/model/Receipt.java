@@ -4,7 +4,15 @@ import java.util.Date;
 
 public class Receipt {
 
-    public enum Prior{NORMAL, CITO, STATIM}
+    public enum Prior{NORMAL, CITO, STATIM;
+
+        Prior get(int i){
+            if (i >= 0 && i < values().length)
+                return values()[i];
+
+            return null;
+        }
+    }
 
     private String description;
     private Patient patient;

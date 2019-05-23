@@ -8,7 +8,9 @@ import java.util.List;
 
 public class DoctorsData extends AbstractDBController<Doctor, Long> {
 
-    public DoctorsData(){ super(); }
+    public DoctorsData() {
+        super();
+    }
 
     @Override
     public List<Doctor> getAll() {
@@ -16,9 +18,9 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
         List<Doctor> out = new ArrayList<>();
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors");
+            ResultSet rs = sendQuery("SELECT * FROM doctors;");
 
-            while (rs.next()){
+            while (rs.next()) {
                 out.add(new Doctor(
                         Long.parseLong(rs.getString(1)),
                         rs.getString(2),
@@ -37,7 +39,8 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
     public Doctor getEntityById(Long id) {
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = " + id.toString());
+            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = "
+                    + id.toString() + ";");
 
             return new Doctor(
                     Long.parseLong(rs.getString(1)),
@@ -47,23 +50,22 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     rs.getString(5)
             );
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
     public Doctor update(Doctor entity) {
 
         try {
-            ResultSet rs = sendQuery("UPDATE doctors SET " +
-                    "firstname = '" + entity.getFirstName()
+            sendQuery("UPDATE doctors SET "
+                    + "firstname = '" + entity.getFirstName()
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
                     + "', spetiality = '" + entity.getSpeciality()
-                    + "', WHERE id = " + entity.getId());
+                    + "', WHERE id = " + entity.getId() + ";");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,11 +76,30 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
 
     @Override
     public boolean delete(Long id) {
-        return false;
+
+        try {
+            sendQuery("DELETE FROM doctors WHERE id = " + id + ";");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean create(Doctor entity) {
-        return false;
+
+        try {
+            sendQuery("INSERT INTO doctors (firstname, lastname, dadsname, speciality)" +
+                    "VALUES ("
+                    + entity.getFirstName() + ", "
+                    + entity.getLastName() + ", "
+                    + entity.getDadsName() + ", "
+                    + entity.getSpeciality() + ");");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

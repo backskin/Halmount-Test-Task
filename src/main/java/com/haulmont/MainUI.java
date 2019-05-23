@@ -1,6 +1,5 @@
 package com.haulmont;
 
-import com.haulmont.model.Doctor;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
@@ -21,12 +20,6 @@ public class MainUI extends UI {
         layout.setMargin(true);
 
         layout.addComponent(new Label("Main UI"));
-
-        for (Doctor d:
-             dataService.getDoctors()) {
-            layout.addComponent(new Label(d.getSpeciality()));
-        }
-
         layout.addComponent(new Label("Total Doctors: " + dataService.getDoctors().size()));
 
         setContent(layout);
