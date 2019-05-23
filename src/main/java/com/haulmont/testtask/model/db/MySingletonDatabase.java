@@ -10,28 +10,40 @@ import java.sql.Statement;
 
 public class MySingletonDatabase {
 
-    private static Connection c = null;
+    private Connection connection;
+    private static MySingletonDatabase instance = null;
 
-    public static Connection getConnection(){
+    private MySingletonDatabase(){
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            connection = DriverManager.getConnection("jdbc:hsqldb:file:testdb", "SA", "");
 
-        if (c == null) {
-            try {
-                Class.forName("org.hsqldb.jdbc.JDBCDriver");
-                c = DriverManager.getConnection("jdbc:hsqldb:file:testdb", "SA", "");
-                setup();
-
-            } catch (SQLException | ClassNotFoundException | IOException e) {
-                e.printStackTrace(System.out);
-            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace(System.out);
         }
-
-        return c;
     }
 
-    private static void setup() throws SQLException, IOException {
+    public static MySingletonDatabase getInstance(){
 
-        Statement st = c.createStatement();
-        SqlFile sf = new SqlFile(new File(""));
+        if (instance == null) {
+            instance = new MySingletonDatabase();
+            instance.setup();
+        }
+        return instance;
+    }
 
+    private void setup() {
+
+        try {
+            Statement st = connection.createStatement();
+            SqlFile sf = new SqlFile(new File(""));
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConnetion() {
+        return connection;
     }
 }

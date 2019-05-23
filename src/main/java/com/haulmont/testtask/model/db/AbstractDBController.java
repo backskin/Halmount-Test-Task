@@ -5,10 +5,10 @@ import java.util.List;
 
 public abstract class AbstractDBController<E,K> {
 
-    private Connection connection;
+    private MySingletonDatabase db;
 
     AbstractDBController() {
-        connection = MySingletonDatabase.getConnection();
+        db = MySingletonDatabase.getInstance();
     }
 
     public abstract List<E> getAll();
@@ -21,7 +21,7 @@ public abstract class AbstractDBController<E,K> {
 
         Statement statement;
         try {
-            statement = connection.createStatement();
+            statement = db.getConnetion().createStatement();
             ResultSet rs = statement.executeQuery(sql);
             statement.close();
             return rs;
