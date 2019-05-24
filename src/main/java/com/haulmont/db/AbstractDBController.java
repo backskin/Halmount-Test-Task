@@ -19,8 +19,7 @@ public abstract class AbstractDBController<E,K> {
 
     protected ResultSet sendQuery(String sql) throws SQLException {
 
-        Statement statement;
-        statement = db.getConnection().createStatement();
+        Statement statement = db.createStatement();
         ResultSet rs = statement.executeQuery(sql);
         statement.close();
         return rs;

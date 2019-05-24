@@ -2,18 +2,18 @@ package com.haulmont.model;
 
 public class Patient extends Human {
 
-    private int phone;
+    private String  phone;
 
-    public Patient(long id, String firstName, String lastName, String dadsName, int phone) {
+    public Patient(long id, String firstName, String lastName, String dadsName, String phone) {
         super(id, firstName, lastName, dadsName);
         this.phone = phone;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    void setPhone(int phone) {
+    void setPhone(String phone) {
         this.phone = phone;
     }
 }

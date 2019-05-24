@@ -1,6 +1,7 @@
 package com.haulmont.db;
 
 import com.haulmont.model.Doctor;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5)));
+                        rs.getString(5))
+                );
             }
 
         } catch (SQLException e) {
@@ -40,7 +42,8 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
 
         try {
             ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = "
-                    + id.toString() + ";");
+                    + id.toString() + ";"
+            );
 
             return new Doctor(
                     rs.getLong(1),
@@ -65,7 +68,8 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
                     + "', spetiality = '" + entity.getSpeciality()
-                    + "', WHERE id = " + entity.getId() + ";");
+                    + "', WHERE id = " + entity.getId() + ";"
+            );
 
         } catch (SQLException e) {
             e.getMessage();
@@ -95,7 +99,9 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     + entity.getFirstName() + ", "
                     + entity.getLastName() + ", "
                     + entity.getDadsName() + ", "
-                    + entity.getSpeciality() + ");");
+                    + entity.getSpeciality() + ");"
+            );
+
             return true;
         } catch (SQLException e) {
             e.getMessage();

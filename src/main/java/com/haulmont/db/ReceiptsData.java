@@ -29,7 +29,8 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
                         rs.getLong(4),
                         rs.getDate(5),
                         rs.getInt(6),
-                        rs.getInt(7)));
+                        rs.getInt(7))
+                );
             }
         }catch (SQLException e){
             e.getMessage();
@@ -44,13 +45,15 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
         try {
 
             ResultSet rs = sendQuery("SELECT * FROM receipts WHERE id = " + id);
-            return new Receipt(rs.getLong(1),
+            return new Receipt(
+                    rs.getLong(1),
                     rs.getString(2),
                     rs.getLong(3),
                     rs.getLong(4),
                     rs.getDate(5),
                     rs.getInt(6),
-                    rs.getInt(7));
+                    rs.getInt(7)
+            );
 
         } catch (SQLException e){
             e.getMessage();
@@ -70,7 +73,8 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
                     + ", patientID = " + entity.getPatientID()
                     + ", creationDate = " + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate()))
                     + ", expiration = " + entity.getExpiration()
-                    + "priority = " + entity.getPrior().ordinal());
+                    + "priority = " + entity.getPrior().ordinal()
+            );
 
         } catch (SQLException e){
             e.getMessage();
@@ -102,7 +106,8 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
                     + entity.getPatientID() + ", DATE '"
                     + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate())) + "', "
                     + entity.getExpiration() + ", "
-                    + entity.getPrior().ordinal() + ");");
+                    + entity.getPrior().ordinal() + ");"
+            );
             return true;
 
         } catch (SQLException e) {
@@ -110,5 +115,30 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
             return false;
 
         }
+    }
+
+    public List<Receipt> chargeOf(long doctorID){
+
+        List<Receipt> receipts = new ArrayList<>();
+
+        try {
+            ResultSet rs = sendQuery("SELECT * FROM receipts WHERE doctorID = " + doctorID);
+            while (rs.next()){
+
+                receipts.add( new Receipt(
+                        rs.getLong(1),
+                        rs.getString(2),
+                        rs.getLong(3),
+                        rs.getLong(4),
+                        rs.getDate(5),
+                        rs.getInt(6),
+                        rs.getInt(7)
+                ));
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+
+        return receipts;
     }
 }

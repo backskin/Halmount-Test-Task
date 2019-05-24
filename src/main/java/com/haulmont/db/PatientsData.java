@@ -24,10 +24,11 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getInt(5)));
+                        rs.getString(5)));
             }
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
         return out;
@@ -45,7 +46,7 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getInt(5)
+                    rs.getString(5)
             );
 
         } catch (SQLException e){
@@ -63,9 +64,11 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
                     + "', phone = '" + entity.getPhone()
-                    + "', WHERE id = " + entity.getId() + ";");
+                    + "', WHERE id = " + entity.getId() + ";"
+            );
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
@@ -74,10 +77,14 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
 
     @Override
     public boolean delete(Long id) {
+
         try {
             sendQuery("DELETE FROM patients WHERE id = " + id + ";");
+
             return true;
+
         } catch (SQLException e) {
+
             e.printStackTrace();
             return false;
         }
@@ -91,9 +98,13 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
                     + entity.getFirstName() + ", "
                     + entity.getLastName() + ", "
                     + entity.getDadsName() + ", "
-                    + entity.getPhone() + ");");
+                    + entity.getPhone() + ");"
+            );
+
             return true;
+
         } catch (SQLException e) {
+
             e.printStackTrace();
             return false;
         }

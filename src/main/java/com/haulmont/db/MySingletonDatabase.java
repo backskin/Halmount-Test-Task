@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 
 public class MySingletonDatabase {
@@ -37,15 +38,15 @@ public class MySingletonDatabase {
     private void loadDefault(){
 
         loadScriptResource("sql/dbdefault.sql");
-        loadScriptResource("sql/dbstack.sql");
+        loadScriptResource("sql/dbInit.sql");
     }
 
-    public void loadScriptResource(String sqlscript) {
+    private void loadScriptResource(String sqlScript) {
 
         try {
             SqlFile sf = new SqlFile(
                     new File(Objects.requireNonNull(getClass().getClassLoader()
-                            .getResource(sqlscript)).getFile()
+                            .getResource(sqlScript)).getFile()
                     )
             );
 
@@ -59,7 +60,17 @@ public class MySingletonDatabase {
 
 
 
-    public Connection getConnection() {
-        return connection;
+    public Statement createStatement() {
+        {
+            try {
+                if (connection == null)
+                    return null;
+                else
+                    return connection.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 }

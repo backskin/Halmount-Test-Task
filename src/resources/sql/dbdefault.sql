@@ -11,7 +11,7 @@ CREATE TABLE patients (
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     dadsname VARCHAR(255) NOT NULL,
-    phone INTEGER
+    phone VARCHAR(255)
 );
 
 CREATE TABLE receipts (

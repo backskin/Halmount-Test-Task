@@ -56,4 +56,14 @@ public abstract class Human {
 
         return lastName + " " + firstName + " " + dadsName;
     }
+
+    public boolean contains(String excerpt){
+
+        String[] split = excerpt.split(" ");
+        for (String s: split) {
+            if (firstName.contains(s) || lastName.contains(s) || dadsName.contains(s))
+                return true;
+        }
+        return false;
+    }
 }
