@@ -5,6 +5,8 @@ import com.haulmont.db.MySingletonDatabase;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TestMain {
 
@@ -20,6 +22,17 @@ public class TestMain {
                         + ", name: " + rs.getString(2)
                         + " " + rs.getString(3)
                         + " " + rs.getString(4));
+            }
+
+            rs.close();
+            rs = st.executeQuery("select * from receipts");
+            while (rs.next()){
+                System.out.println(
+                        "ID: " + rs.getInt(1)
+                        + ", desc: " + rs.getString(2)
+                        + ", exp date: "
+                                + (new SimpleDateFormat("dd/MM/yyyy")).format(new Date(rs.getDate(6).getTime()))
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();

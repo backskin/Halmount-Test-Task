@@ -14,7 +14,7 @@ values
 
 INSERT INTO receipts (description, docID, patientID, creationDate, expirationDate)
 values
-    ('drug Depilix use 2 tablets per day, 10 days', 1, 2, TO_DATE('17/05/2019', 'DD/MM/YYYY'), TO_DATE('27/05/2019', 'DD/MM/YYYY')),
-    ('drug Sparcion use 1 tablet after dinner, 8 days', 1, 0, TO_DATE('14/05/2019', 'DD/MM/YYYY'), TO_DATE('22/05/2019', 'DD/MM/YYYY')),
-    ('drug Giogin use 4 tablets every 6 hours, 12 days', 2, 2, TO_DATE('20/05/2019', 'DD/MM/YYYY'), TO_DATE('01/06/2019', 'DD/MM/YYYY'))
+    ('drug Depilix use 2 tablets per day, 10 days', 1, 2, DATE '2019-05-17', DATE '2019-05-27'),
+    ('drug Sparcion use 1 tablet after dinner, 8 days', 1, 0, DATE '2019-05-14', DATE '2019-05-22'),
+    ('drug Giogin use 4 tablets every 6 hours, 12 days', 2, 2, DATE '2019-05-20', DATE '2019-06-01')
     ;
