@@ -20,11 +20,11 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
 
             while (rs.next()){
                 out.add(new Patient(
-                        Long.parseLong(rs.getString(1)),
+                        rs.getLong(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5)));
+                        rs.getInt(5)));
             }
 
         } catch (SQLException e) {
@@ -41,11 +41,11 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
                     + id.toString() + ";");
 
             return new Patient(
-                    Long.parseLong(rs.getString(1)),
+                    rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5)
+                    rs.getInt(5)
             );
 
         } catch (SQLException e){

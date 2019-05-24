@@ -22,7 +22,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
 
             while (rs.next()) {
                 out.add(new Doctor(
-                        Long.parseLong(rs.getString(1)),
+                        rs.getLong(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -30,7 +30,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         return out;
     }
@@ -43,7 +43,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     + id.toString() + ";");
 
             return new Doctor(
-                    Long.parseLong(rs.getString(1)),
+                    rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
@@ -51,7 +51,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
             );
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
             return null;
         }
     }
@@ -68,7 +68,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     + "', WHERE id = " + entity.getId() + ";");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
 
         return null;
@@ -81,7 +81,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
             sendQuery("DELETE FROM doctors WHERE id = " + id + ";");
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
             return false;
         }
     }
@@ -98,7 +98,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     + entity.getSpeciality() + ");");
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
             return false;
         }
     }

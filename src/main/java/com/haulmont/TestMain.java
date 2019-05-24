@@ -27,12 +27,10 @@ public class TestMain {
             rs.close();
             rs = st.executeQuery("select * from receipts");
             while (rs.next()){
-                System.out.println(
-                        "ID: " + rs.getInt(1)
+                System.out.println("ID: " + rs.getInt(1)
                         + ", desc: " + rs.getString(2)
-                        + ", exp date: "
-                                + (new SimpleDateFormat("dd/MM/yyyy")).format(new Date(rs.getDate(6).getTime()))
-                );
+                        + ", creat.date: " + rs.getDate(5)
+                        + ", exp days: " + rs.getInt(6));
             }
         } catch (SQLException e) {
             e.printStackTrace();

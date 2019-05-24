@@ -53,7 +53,7 @@ public class MySingletonDatabase {
             sf.execute();
 
         } catch (SQLException | IOException | SqlToolError e) {
-            e.getLocalizedMessage();
+            e.getMessage();
         }
     }
 

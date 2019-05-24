@@ -1,12 +1,11 @@
 package com.haulmont.model;
-
 import java.util.Date;
 
 public class Receipt {
 
     public enum Prior{NORMAL, CITO, STATIM;
 
-        Prior get(int i){
+        public static Prior get(int i){
             if (i >= 0 && i < values().length)
                 return values()[i];
 
@@ -14,58 +13,73 @@ public class Receipt {
         }
     }
 
+    private long id;
     private String description;
-    private Patient patient;
-    private Doctor doctor;
-    private Date creationDate;
-    private Date expirationDate;
+    private long doctorID;
+    private long patientID;
+    private java.util.Date creationDate;
+    private int expiration;
     private Prior prior;
+
+    public Receipt(long id, String description, long doctorID, long patientID, java.sql.Date creationDate, int expiration, int prior) {
+        this.id = id;
+        this.description = description;
+        this.patientID = patientID;
+        this.doctorID = doctorID;
+        this.creationDate = creationDate;
+        this.expiration = expiration;
+        this.prior = Prior.get(prior);
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public String getDescription() {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public long getPatientID() {
+        return patientID;
     }
 
-    void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatientID(long patientID) {
+        this.patientID = patientID;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public long getDoctorID() {
+        return doctorID;
     }
 
-    void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctorID(long doctorID) {
+        this.doctorID = doctorID;
     }
 
     public Date getCreationDate() {
         return creationDate;
     }
 
-    void setCreationDate(Date creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
+    public int getExpiration() {
+        return expiration;
     }
 
-    void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setExpiration(int expiration) {
+        this.expiration = expiration;
     }
 
     public Prior getPrior() {
         return prior;
     }
 
-    void setPrior(Prior prior) {
+    public void setPrior(Prior prior) {
         this.prior = prior;
     }
 }

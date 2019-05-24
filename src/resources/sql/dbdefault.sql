@@ -11,7 +11,7 @@ CREATE TABLE patients (
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     dadsname VARCHAR(255) NOT NULL,
-    phone VARCHAR(255),
+    phone INTEGER
 );
 
 CREATE TABLE receipts (
@@ -20,7 +20,8 @@ CREATE TABLE receipts (
     docID BIGINT NOT NULL,
     patientID BIGINT NOT NULL,
     creationDate DATE NOT NULL,
-    expirationDate DATE NOT NULL,
+    expiration INTEGER NOT NULL,
+    priority INTEGER,
     FOREIGN KEY (docID) REFERENCES doctors(id),
     FOREIGN KEY (patientID) REFERENCES patients(id)
 );
