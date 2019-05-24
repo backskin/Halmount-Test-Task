@@ -60,7 +60,7 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
     }
 
     @Override
-    public Doctor update(Doctor entity) {
+    public void update(Doctor entity) {
 
         try {
             sendQuery("UPDATE doctors SET "
@@ -75,7 +75,6 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
             e.getMessage();
         }
 
-        return null;
     }
 
     @Override

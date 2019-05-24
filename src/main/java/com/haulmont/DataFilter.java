@@ -8,21 +8,25 @@ import java.util.List;
 
 public class DataFilter {
 
-    DataService service;
+    private DataService dataService;
 
-    DataFilter(DataService service){
+    DataFilter(DataService dataService){
 
-        this.service = service;
+        this.dataService = dataService;
     }
 
-    private List<Human> findPatientsByQuery(List<Human> humans, String excerpt){
+    private List<Human> findHumansByExcerpt(List<Human> humans, String excerpt){
+
+        List<Human> out = new ArrayList<>();
 
         for (Human h: humans) {
 
-            if (!h.contains(excerpt)) humans.remove(h);
+            if (h.contains(excerpt))
+
+                out.add(h);
         }
 
-        return humans;
+        return out;
     }
 
     public List<Receipt> filterByDoctor(List<Receipt> receipts, String excerpt){
@@ -31,7 +35,8 @@ public class DataFilter {
 
         for (Receipt r: receipts) {
 
-            if (service.getDoctorByID(r.getDoctorID()).contains(excerpt))
+            if (dataService.getDoctorByID(r.getDoctorID()).contains(excerpt))
+
                 out.add(r);
         }
 
@@ -45,7 +50,8 @@ public class DataFilter {
 
         for (Receipt r: receipts) {
 
-            if (service.getPatientByID(r.getPatientID()).contains(excerpt))
+            if (dataService.getPatientByID(r.getPatientID()).contains(excerpt))
+
                 out.add(r);
         }
 
@@ -59,6 +65,21 @@ public class DataFilter {
         for (Receipt r: receipts) {
 
             if (r.getDescription().contains(excerpt))
+
+                out.add(r);
+        }
+
+        return out;
+    }
+
+    public List<Receipt> filterByPriority(List<Receipt> receipts, Receipt.Prior prior){
+
+        List<Receipt> out = new ArrayList<>();
+
+        for (Receipt r: receipts) {
+
+            if (r.getPrior().equals(prior))
+
                 out.add(r);
         }
 

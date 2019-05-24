@@ -46,12 +46,12 @@ class DataService {
 
     public void addDoctor(String firstName, String lastName, String dadsName, String spec){
 
-        doctorsData.create(new Doctor(0, firstName,lastName,dadsName,spec));
+        doctorsData.create(new Doctor(0, firstName, lastName, dadsName, spec));
     }
 
-    public void addPatient(String firstName, String lastName, String dadsName, int phone){
+    public void addPatient(String firstName, String lastName, String dadsName, String phone){
 
-        patientsData.create(new Patient(0,firstName,lastName,dadsName,phone));
+        patientsData.create(new Patient(0, firstName, lastName, dadsName, phone));
     }
 
     public void addReceipt(String description, Doctor doctor, Patient patient,
@@ -105,8 +105,4 @@ class DataService {
 
         return receiptsData.chargeOf(doctor.getId());
     }
-
-
-
-
 }

@@ -63,7 +63,7 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
     }
 
     @Override
-    public Receipt update(Receipt entity) {
+    public void update(Receipt entity) {
 
         try {
 
@@ -80,7 +80,6 @@ public class ReceiptsData extends AbstractDBController<Receipt, Long> {
             e.getMessage();
         }
 
-        return null;
     }
 
     @Override

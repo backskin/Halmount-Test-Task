@@ -56,7 +56,7 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
     }
 
     @Override
-    public Patient update(Patient entity) {
+    public void update(Patient entity) {
 
         try {
             sendQuery("UPDATE patients SET "
@@ -71,8 +71,6 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
 
             e.printStackTrace();
         }
-
-        return null;
     }
 
     @Override

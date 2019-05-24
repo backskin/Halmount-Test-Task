@@ -19,7 +19,7 @@ public class MySingletonDatabase {
     private MySingletonDatabase(){
         try {
             Class.forName("org.hsqldb.jdbcDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "");
+            connection = DriverManager.getConnection("jdbc:hsqldb:file:database/db", "SA", "");
             loadDefault();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -38,7 +38,7 @@ public class MySingletonDatabase {
     private void loadDefault(){
 
         loadScriptResource("sql/dbdefault.sql");
-        loadScriptResource("sql/dbInit.sql");
+        loadScriptResource("sql/dbSamples.sql");
     }
 
     private void loadScriptResource(String sqlScript) {

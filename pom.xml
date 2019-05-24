@@ -84,7 +84,7 @@
         <resources>
             <resource>
                 <directory>
-                    src/resources
+                    src/main/resources
                 </directory>
             </resource>
         </resources>

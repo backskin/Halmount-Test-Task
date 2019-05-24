@@ -11,16 +11,16 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-
+        inittest();
     }
 
-    public void test2(){
+    public static void test2(){
 
         MySingletonDatabase database = MySingletonDatabase.getInstance();
     }
 
 
-    public void inittest(){
+    public static void inittest(){
 
         MySingletonDatabase database = MySingletonDatabase.getInstance();
 
@@ -29,8 +29,8 @@ public class TestMain {
             ResultSet rs = st.executeQuery("select * from doctors");
             while (rs.next()){
                 System.out.println("ID: " + rs.getString(1)
-                        + ", name: " + rs.getString(2)
-                        + " " + rs.getString(3)
+                        + ", name: " + rs.getString(3)
+                        + " " + rs.getString(2)
                         + " " + rs.getString(4));
             }
 
