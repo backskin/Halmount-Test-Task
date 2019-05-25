@@ -10,51 +10,51 @@ import java.util.List;
 
 public class DataService {
 
-    private DoctorsDBController doctorsDBController = new DoctorsDBController();
-    private PatientsDBController patientsDBController = new PatientsDBController();
-    private ReceiptsDBController receiptsDBController = new ReceiptsDBController();
+    private static DoctorsDBController doctorsDBController = new DoctorsDBController();
+    private static PatientsDBController patientsDBController = new PatientsDBController();
+    private static ReceiptsDBController receiptsDBController = new ReceiptsDBController();
 
-    public List<Doctor> getDoctors(){
+    public static List<Doctor> getDoctors(){
 
         return doctorsDBController.getAll();
     }
 
-    public List<Patient> getPatients(){
+    public static List<Patient> getPatients(){
 
         return patientsDBController.getAll();
     }
 
-    public List<Receipt> getReceipts(){
+    public static List<Receipt> getReceipts(){
 
         return receiptsDBController.getAll();
     }
 
-    public Doctor getDoctorByID(long id){
+    public static Doctor getDoctorByID(long id){
 
         return doctorsDBController.getEntityById(id);
     }
 
-    public Patient getPatientByID(long id){
+    public static Patient getPatientByID(long id){
 
         return patientsDBController.getEntityById(id);
     }
 
-    public Receipt getReceiptByID(long id){
+    public static Receipt getReceiptByID(long id){
 
         return receiptsDBController.getEntityById(id);
     }
 
-    public void addDoctor(String firstName, String lastName, String dadsName, String spec){
+    public static void addDoctor(String firstName, String lastName, String dadsName, String spec){
 
         doctorsDBController.create(new Doctor(0, firstName, lastName, dadsName, spec));
     }
 
-    public void addPatient(String firstName, String lastName, String dadsName, String phone){
+    public static void addPatient(String firstName, String lastName, String dadsName, String phone){
 
         patientsDBController.create(new Patient(0, firstName, lastName, dadsName, phone));
     }
 
-    public void addReceipt(String description, Doctor doctor, Patient patient,
+    public static void addReceipt(String description, Doctor doctor, Patient patient,
                            java.sql.Date creationDate, int expiration, int prior){
 
         receiptsDBController.create(new Receipt(
@@ -63,22 +63,22 @@ public class DataService {
 
     }
 
-    public void updateDoctor(Doctor doctor){
+    public static void updateDoctor(Doctor doctor){
 
         doctorsDBController.update(doctor);
     }
 
-    public void updatePatient(Patient patient){
+    public static void updatePatient(Patient patient){
 
         patientsDBController.update(patient);
     }
 
-    public void updateReceipt(Receipt receipt){
+    public static void updateReceipt(Receipt receipt){
 
         receiptsDBController.update(receipt);
     }
 
-    public void deleteDoctor(Doctor doctor) throws Exception {
+    public static void deleteDoctor(Doctor doctor) throws Exception {
 
         if (!doctorsDBController.delete(doctor.getId()))
 
@@ -87,7 +87,7 @@ public class DataService {
             );
     }
 
-    public void deletePatient(Patient patient) throws Exception {
+    public static void deletePatient(Patient patient) throws Exception {
 
             if (!patientsDBController.delete(patient.getId()))
 
@@ -96,12 +96,12 @@ public class DataService {
                 );
     }
 
-    public void deleteReceipt(Receipt receipt){
+    public static void deleteReceipt(Receipt receipt){
 
         receiptsDBController.delete(receipt.getId());
     }
 
-    public List<Receipt> getDoctorReceipts(Doctor doctor){
+    public static List<Receipt> getDoctorReceipts(Doctor doctor){
 
         return receiptsDBController.chargeOf(doctor.getId());
     }

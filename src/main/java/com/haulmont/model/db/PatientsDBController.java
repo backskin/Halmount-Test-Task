@@ -39,20 +39,22 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
 
         try {
             ResultSet rs = sendQuery("SELECT * FROM patients WHERE id = "
-                    + id.toString() + ";");
+                    + id);
 
-            return new Patient(
+            if (rs.next())
+                return new Patient(
                     rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5)
-            );
+                );
 
         } catch (SQLException e){
             e.printStackTrace();
-            return null;
         }
+
+        return null;
     }
 
     @Override
@@ -77,7 +79,7 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
     public boolean delete(Long id) {
 
         try {
-            sendQuery("DELETE FROM patients WHERE id = " + id + ";");
+            sendQuery("DELETE FROM patients WHERE id = " + id);
 
             return true;
 

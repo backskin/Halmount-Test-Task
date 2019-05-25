@@ -18,16 +18,16 @@ public class Receipt {
     private long doctorID;
     private long patientID;
     private java.util.Date creationDate;
-    private int expiration;
+    private int validity;
     private Prior prior;
 
-    public Receipt(long id, String description, long doctorID, long patientID, java.sql.Date creationDate, int expiration, int prior) {
+    public Receipt(long id, String description, long doctorID, long patientID, java.sql.Date creationDate, int validity, int prior) {
         this.id = id;
         this.description = description;
         this.patientID = patientID;
         this.doctorID = doctorID;
         this.creationDate = creationDate;
-        this.expiration = expiration;
+        this.validity = validity;
         this.prior = Prior.get(prior);
     }
 
@@ -67,12 +67,12 @@ public class Receipt {
         this.creationDate = creationDate;
     }
 
-    public int getExpiration() {
-        return expiration;
+    public int getValidity() {
+        return validity;
     }
 
-    public void setExpiration(int expiration) {
-        this.expiration = expiration;
+    public void setValidity(int validity) {
+        this.validity = validity;
     }
 
     public Prior getPrior() {

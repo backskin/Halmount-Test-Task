@@ -20,8 +20,8 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
         try {
 
             ResultSet rs = sendQuery("SELECT * FROM receipts");
-            while (rs.next()){
 
+            while (rs.next()){
                 receipts.add( new Receipt(
                         rs.getLong(1),
                         rs.getString(2),
@@ -43,9 +43,10 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
     public Receipt getEntityById(Long id) {
 
         try {
-
             ResultSet rs = sendQuery("SELECT * FROM receipts WHERE id = " + id);
-            return new Receipt(
+
+            if (rs.next())
+                return new Receipt(
                     rs.getLong(1),
                     rs.getString(2),
                     rs.getLong(3),
@@ -53,7 +54,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
                     rs.getDate(5),
                     rs.getInt(6),
                     rs.getInt(7)
-            );
+                );
 
         } catch (SQLException e){
             e.getMessage();
@@ -61,6 +62,8 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
 
         return null;
     }
+
+
 
     @Override
     public void update(Receipt entity) {
@@ -72,7 +75,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
                     + ", docID = " + entity.getDoctorID()
                     + ", patientID = " + entity.getPatientID()
                     + ", creationDate = " + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate()))
-                    + ", expiration = " + entity.getExpiration()
+                    + ", validity = " + entity.getValidity()
                     + "priority = " + entity.getPrior().ordinal()
             );
 
@@ -104,7 +107,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
                     + entity.getDoctorID() + ", "
                     + entity.getPatientID() + ", DATE '"
                     + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate())) + "', "
-                    + entity.getExpiration() + ", "
+                    + entity.getValidity() + ", "
                     + entity.getPrior().ordinal() + ");"
             );
             return true;
@@ -122,8 +125,8 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
 
         try {
             ResultSet rs = sendQuery("SELECT * FROM receipts WHERE doctorID = " + doctorID);
-            while (rs.next()){
 
+            while (rs.next()){
                 receipts.add( new Receipt(
                         rs.getLong(1),
                         rs.getString(2),

@@ -19,8 +19,9 @@ public class SingletonDatabase {
     private SingletonDatabase(){
         try {
             Class.forName("org.hsqldb.jdbcDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:database/db", "SA", "");
-
+            connection = DriverManager.getConnection("jdbc:hsqldb:mem:memdb", "SA", "");
+                    //"jdbc:hsqldb:file:database/db", "SA", "");
+            loadDefault();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(System.out);
@@ -31,7 +32,6 @@ public class SingletonDatabase {
 
         if (instance == null) {
             instance = new SingletonDatabase();
-            instance.loadDefault();
         }
         return instance;
     }
@@ -45,6 +45,7 @@ public class SingletonDatabase {
     private void loadScriptResource(String sqlScript) {
 
         try {
+
             SqlFile sf = new SqlFile(
                     new File(Objects.requireNonNull(getClass().getClassLoader()
                             .getResource(sqlScript)).getFile()
@@ -58,8 +59,6 @@ public class SingletonDatabase {
             e.getMessage();
         }
     }
-
-
 
     public Statement createStatement() {
         {

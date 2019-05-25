@@ -10,6 +10,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import java.text.SimpleDateFormat;
+
 @Theme(ValoTheme.THEME_NAME)
 
 public class MainUI extends UI {
@@ -18,25 +20,31 @@ public class MainUI extends UI {
 
     protected void init(VaadinRequest request) {
 
-        DataService dataService = new DataService();
+        Layout layout = new HorizontalLayout();
 
         TabSheet tabSheet = new TabSheet();
 
         Grid<Doctor> doctorGrid = new Grid<>();
-        doctorGrid.setItems(dataService.getDoctors());
+        doctorGrid.setItems(DataService.getDoctors());
+        doctorGrid.addColumn(Human::getId).setCaption("ID");
         doctorGrid.addColumn(Human::getFullName).setCaption("Name");
         doctorGrid.addColumn(Doctor::getSpeciality).setCaption("Speciality");
 
         Grid<Patient> patientGrid = new Grid<>();
-        patientGrid.setItems(dataService.getPatients());
+        patientGrid.setItems(DataService.getPatients());
+        patientGrid.addColumn(Human::getId).setCaption("ID");
         patientGrid.addColumn(Human::getFullName).setCaption("Name");
         patientGrid.addColumn(Patient::getPhone).setCaption("Phone");
 
         Grid<Receipt> receiptGrid = new Grid<>();
-        receiptGrid.setItems(dataService.getReceipts());
+        receiptGrid.setItems(DataService.getReceipts());
+        receiptGrid.addColumn(Receipt::getId).setCaption("ID");
         receiptGrid.addColumn(Receipt::getDescription).setCaption("Description");
-        receiptGrid.addColumn(Receipt::getDoctorID).setCaption("Doctor");
-        receiptGrid.addColumn(Receipt::getPatientID).setCaption("Patient");
+        receiptGrid.addColumn(r -> DataService.getDoctorByID(r.getDoctorID()).getFullName()).setCaption("Doctor");
+        receiptGrid.addColumn(r -> DataService.getPatientByID(r.getPatientID()).getFullName()).setCaption("Patient");
+        receiptGrid.addColumn(r -> (new SimpleDateFormat("dd-MM-yyyy")).format(r.getCreationDate())).setCaption("Creation Date");
+        receiptGrid.addColumn(Receipt::getValidity).setCaption("Validity (days)");
+        receiptGrid.addColumn(Receipt::getPrior).setCaption("Priority");
 
         tabSheet.addTab(doctorGrid).setCaption("Doctors");
         tabSheet.addTab(patientGrid).setCaption("Patients");
@@ -47,6 +55,9 @@ public class MainUI extends UI {
         receiptGrid.setSizeFull();
         tabSheet.setSizeFull();
 
-        setContent(tabSheet);
+        layout.addComponent(tabSheet);
+        layout.setSizeFull();
+
+        setContent(layout);
     }
 }

@@ -41,22 +41,22 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
     public Doctor getEntityById(Long id) {
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = "
-                    + id.toString() + ";"
-            );
+            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = " + id);
 
-            return new Doctor(
+            if (rs.next())
+                return new Doctor(
                     rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5)
-            );
+                );
 
         } catch (SQLException e) {
             e.getMessage();
-            return null;
+
         }
+        return null;
     }
 
     @Override

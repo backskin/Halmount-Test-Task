@@ -1,7 +1,3 @@
-IF NOT EXISTS (SELECT * FROM PUBLIC.TABLES WHERE TABLE_NAME = 'doctors')
-THEN
-BEGIN
-
 CREATE TABLE doctors (
     id BIGINT IDENTITY PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
@@ -24,11 +20,8 @@ CREATE TABLE receipts (
     docID BIGINT NOT NULL,
     patientID BIGINT NOT NULL,
     creationDate DATE NOT NULL,
-    expiration INTEGER NOT NULL,
+    validity INTEGER NOT NULL,
     priority INTEGER,
     FOREIGN KEY (docID) REFERENCES doctors(id),
     FOREIGN KEY (patientID) REFERENCES patients(id)
 );
-
-END
-END IF
