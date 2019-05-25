@@ -8,12 +8,12 @@ import com.haulmont.model.entities.Patient;
 import com.haulmont.model.entities.Receipt;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -49,11 +49,15 @@ public class MainUI extends UI {
 
         Layout functionalLayout = new HorizontalLayout();
 
+        Button statButton = new Button ("Show Stat-s");
+
         Button addButton = new Button("Add");
         Button editButton = new Button("Edit");
         Button delButton = new Button("Delete");
+
         TextField filterField = new TextField();
         filterField.setPlaceholder("filter by name");
+
         Button acceptFilterButton = new Button("Filter");
 
         acceptFilterButton.addClickListener(clickEvent ->
@@ -80,7 +84,15 @@ public class MainUI extends UI {
 
         });
 
-        functionalLayout.addComponents(addButton,editButton,delButton,filterField,acceptFilterButton);
+        statButton.addClickListener(clickEvent -> addWindow(new StatsDialog()));
+
+
+        functionalLayout.addComponents(statButton, new Label("<hr />", ContentMode.HTML));
+
+        functionalLayout.addComponents(addButton,editButton,delButton,
+                new Label("<hr />",ContentMode.HTML),
+                filterField,acceptFilterButton);
+
 
         Layout l = new VerticalLayout();
 
@@ -170,7 +182,7 @@ public class MainUI extends UI {
         TextField patientFilterField = new TextField();
         patientFilterField.setPlaceholder("find patient...");
 
-        NativeSelect<String> priorListSelect = new NativeSelect<>("Prior Filter");
+        NativeSelect<String> priorListSelect = new NativeSelect<>();
         priorListSelect.setItems("NORMAL", "CITO", "STATIM");
 
         Button acceptFilterButton = new Button("Filter");
@@ -203,10 +215,11 @@ public class MainUI extends UI {
             }
 
             receiptGrid.setItems(out);
-            
+
         });
 
         functionalLayout.addComponents(addButton,editButton,delButton,
+                new Label("<hr />",ContentMode.HTML),
                 descriptFilterField,doctorFilterField,patientFilterField,priorListSelect,acceptFilterButton);
 
         Layout l = new VerticalLayout();
