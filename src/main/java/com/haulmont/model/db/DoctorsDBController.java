@@ -33,10 +33,15 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
         List<Doctor> out = new ArrayList<>();
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE " +
-                    "firstname LIKE " + excerpt +
-                    "OR lastname LIKE " + excerpt +
-                    "OR dadsname LIKE " + excerpt);
+            ResultSet rs;
+            if (excerpt.isEmpty())
+                rs = sendQuery("SELECT * FROM doctors");
+
+            else
+                rs = sendQuery("SELECT * FROM doctors WHERE " +
+                        "LOWER(firstname) LIKE LOWER('%" + excerpt +
+                        "%') OR LOWER(lastname) LIKE LOWER('%" + excerpt +
+                        "%') OR LOWER(dadsname) LIKE LOWER('%" + excerpt + "%')");
 
             addResultsToList(rs, out);
 

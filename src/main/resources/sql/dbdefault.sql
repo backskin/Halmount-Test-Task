@@ -22,6 +22,6 @@ CREATE TABLE receipts (
     creationDate DATE NOT NULL,
     validity INTEGER NOT NULL,
     priority INTEGER,
-    FOREIGN KEY (docID) REFERENCES doctors(id),
+    FOREIGN KEY (doctorID) REFERENCES doctors(id),
     FOREIGN KEY (patientID) REFERENCES patients(id)
 );

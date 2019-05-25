@@ -133,7 +133,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
         try {
 
             ResultSet rs = sendQuery("SELECT * FROM receipts WHERE " +
-                    "description LIKE " + excerpt);
+                    "description LIKE '" + excerpt + "'");
 
             addResultsToList(rs,out);
 

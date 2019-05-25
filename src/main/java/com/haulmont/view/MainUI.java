@@ -8,6 +8,8 @@ import com.haulmont.model.entities.Receipt;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.text.SimpleDateFormat;
@@ -47,14 +49,38 @@ public class MainUI extends UI {
         Button addButton = new Button("Add");
         Button editButton = new Button("Edit");
         Button delButton = new Button("Delete");
-        TextField filterField = new TextField("filter by name");
-        Button acceptFilter = new Button("Filter");
+        TextField filterField = new TextField();
+        filterField.setPlaceholder("filter by name");
+        Button acceptFilterButton = new Button("Filter");
 
-        acceptFilter.addClickListener(clickEvent ->
-                doctorGrid.setItems());
+        acceptFilterButton.addClickListener(clickEvent ->
+                doctorGrid.setItems(DataService.findDoctor(filterField.getValue())));
 
-        functionalLayout.addComponents(addButton,editButton,delButton,filterField,acceptFilter);
+        addButton.addClickListener(clickEvent -> {
+
+            HumanEditDialog dialog = new HumanEditDialog("Add new Doctor");
+            dialog.asNewDoctor();
+            addWindow(dialog);
+        });
+
+        editButton.addClickListener(clickEvent -> {
+
+            if (!(doctorGrid.getSelectedItems().isEmpty())){
+
+                HumanEditDialog dialog = new HumanEditDialog("Edit Doctor");
+                dialog.asEditDoctor(doctorGrid.getSelectionModel().getFirstSelectedItem().get());
+                addWindow(dialog);
+            }
+        });
+
+        delButton.addClickListener(clickEvent -> {
+
+        });
+
+        functionalLayout.addComponents(addButton,editButton,delButton,filterField,acceptFilterButton);
+
         Layout l = new VerticalLayout();
+
         l.addComponent(functionalLayout);
         l.addComponent(doctorGrid);
 
@@ -72,7 +98,39 @@ public class MainUI extends UI {
         patientGrid.setSizeFull();
 
         Layout functionalLayout = new HorizontalLayout();
-        functionalLayout.addComponents(new Button("Add"), new Button("Edit"), new Button("Delete"));
+
+        Button addButton = new Button("Add");
+        Button editButton = new Button("Edit");
+        Button delButton = new Button("Delete");
+        TextField filterField = new TextField();
+        filterField.setPlaceholder("filter by name");
+        Button acceptFilterButton = new Button("Filter");
+
+        acceptFilterButton.addClickListener(clickEvent ->
+                patientGrid.setItems(DataService.findPatient(filterField.getValue())));
+
+        addButton.addClickListener(clickEvent -> {
+
+            HumanEditDialog dialog = new HumanEditDialog("Add new Patient");
+            dialog.asNewPatient();
+            addWindow(dialog);
+        });
+
+        editButton.addClickListener(clickEvent -> {
+
+            if (!patientGrid.getSelectedItems().isEmpty()) {
+
+                HumanEditDialog dialog = new HumanEditDialog("Edit Patient");
+                dialog.asEditPatient(patientGrid.getSelectionModel().getFirstSelectedItem().get());
+                addWindow(dialog);
+            }
+        });
+
+        delButton.addClickListener(clickEvent -> {
+
+        });
+
+        functionalLayout.addComponents(addButton,editButton,delButton,filterField,acceptFilterButton);
 
         Layout l = new VerticalLayout();
         l.addComponent(functionalLayout);
