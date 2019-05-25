@@ -29,6 +29,17 @@ public class DataService {
         return receiptsDBController.getAll();
     }
 
+
+    public static List<Doctor> findDoctor(String excerpt){
+
+        return doctorsDBController.find(excerpt);
+    }
+
+    public static List<Patient> findPatient(String excerpt){
+
+        return patientsDBController.find(excerpt);
+    }
+
     public static Doctor getDoctorByID(long id){
 
         return doctorsDBController.getEntityById(id);
@@ -103,6 +114,6 @@ public class DataService {
 
     public static List<Receipt> getDoctorReceipts(Doctor doctor){
 
-        return receiptsDBController.chargeOf(doctor.getId());
+        return receiptsDBController.filterByDoctor(doctor.getId());
     }
 }

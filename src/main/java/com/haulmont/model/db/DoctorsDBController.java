@@ -13,23 +13,49 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
         super();
     }
 
+    private void addResultsToList(ResultSet rs, List<Doctor> out) throws SQLException {
+
+        while (rs.next()){
+
+            out.add( new Doctor(
+                    rs.getLong(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5))
+            );
+        }
+    }
+
+
+        public List<Doctor> find(String excerpt){
+
+        List<Doctor> out = new ArrayList<>();
+
+        try {
+            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE " +
+                    "firstname LIKE " + excerpt +
+                    "OR lastname LIKE " + excerpt +
+                    "OR dadsname LIKE " + excerpt);
+
+            addResultsToList(rs, out);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return out;
+    }
+
     @Override
     public List<Doctor> getAll() {
 
         List<Doctor> out = new ArrayList<>();
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors;");
+            ResultSet rs = sendQuery("SELECT * FROM doctors");
 
-            while (rs.next()) {
-                out.add(new Doctor(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5))
-                );
-            }
+            addResultsToList(rs, out);
 
         } catch (SQLException e) {
             e.getMessage();
@@ -83,7 +109,9 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
         try {
             sendQuery("DELETE FROM doctors WHERE id = " + id + ";");
             return true;
+
         } catch (SQLException e) {
+
             e.getMessage();
             return false;
         }

@@ -20,21 +20,68 @@ public class MainUI extends UI {
 
     protected void init(VaadinRequest request) {
 
-        Layout layout = new HorizontalLayout();
-
         TabSheet tabSheet = new TabSheet();
 
+        initDoctorsTable(tabSheet);
+        initPatientsTable(tabSheet);
+        initReceiptsTable(tabSheet);
+
+        tabSheet.setSizeFull();
+
+        setContent(tabSheet);
+    }
+
+    private void initDoctorsTable(TabSheet tabSheet){
+
         Grid<Doctor> doctorGrid = new Grid<>();
+
         doctorGrid.setItems(DataService.getDoctors());
         doctorGrid.addColumn(Human::getId).setCaption("ID");
         doctorGrid.addColumn(Human::getFullName).setCaption("Name");
         doctorGrid.addColumn(Doctor::getSpeciality).setCaption("Speciality");
+
+        doctorGrid.setSizeFull();
+
+        Layout functionalLayout = new HorizontalLayout();
+
+        Button addButton = new Button("Add");
+        Button editButton = new Button("Edit");
+        Button delButton = new Button("Delete");
+        TextField filterField = new TextField("filter by name");
+        Button acceptFilter = new Button("Filter");
+
+        acceptFilter.addClickListener(clickEvent ->
+                doctorGrid.setItems());
+
+        functionalLayout.addComponents(addButton,editButton,delButton,filterField,acceptFilter);
+        Layout l = new VerticalLayout();
+        l.addComponent(functionalLayout);
+        l.addComponent(doctorGrid);
+
+        tabSheet.addTab(l).setCaption("Doctors");
+    }
+
+    private void initPatientsTable(TabSheet tabSheet){
 
         Grid<Patient> patientGrid = new Grid<>();
         patientGrid.setItems(DataService.getPatients());
         patientGrid.addColumn(Human::getId).setCaption("ID");
         patientGrid.addColumn(Human::getFullName).setCaption("Name");
         patientGrid.addColumn(Patient::getPhone).setCaption("Phone");
+
+        patientGrid.setSizeFull();
+
+        Layout functionalLayout = new HorizontalLayout();
+        functionalLayout.addComponents(new Button("Add"), new Button("Edit"), new Button("Delete"));
+
+        Layout l = new VerticalLayout();
+        l.addComponent(functionalLayout);
+        l.addComponent(patientGrid);
+
+        tabSheet.addTab(l).setCaption("Patients");
+    }
+
+    private void initReceiptsTable(TabSheet tabSheet){
 
         Grid<Receipt> receiptGrid = new Grid<>();
         receiptGrid.setItems(DataService.getReceipts());
@@ -46,18 +93,15 @@ public class MainUI extends UI {
         receiptGrid.addColumn(Receipt::getValidity).setCaption("Validity (days)");
         receiptGrid.addColumn(Receipt::getPrior).setCaption("Priority");
 
-        tabSheet.addTab(doctorGrid).setCaption("Doctors");
-        tabSheet.addTab(patientGrid).setCaption("Patients");
-        tabSheet.addTab(receiptGrid).setCaption("Receipts");
-
-        doctorGrid.setSizeFull();
-        patientGrid.setSizeFull();
         receiptGrid.setSizeFull();
-        tabSheet.setSizeFull();
 
-        layout.addComponent(tabSheet);
-        layout.setSizeFull();
+        Layout functionalLayout = new HorizontalLayout();
+        functionalLayout.addComponents(new Button("Add"), new Button("Edit"), new Button("Delete"));
 
-        setContent(layout);
+        Layout l = new VerticalLayout();
+        l.addComponent(functionalLayout);
+        l.addComponent(receiptGrid);
+
+        tabSheet.addTab(l).setCaption("Receipts");
     }
 }

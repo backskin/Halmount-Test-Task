@@ -10,22 +10,49 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
 
     public PatientsDBController(){ super(); }
 
+    private void addResultsToList(ResultSet rs, List<Patient> out) throws SQLException {
+
+        while (rs.next()){
+
+            out.add( new Patient(
+                    rs.getLong(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5))
+            );
+        }
+    }
+
+
+        public List<Patient> find(String excerpt){
+
+        List<Patient> out = new ArrayList<>();
+
+        try {
+            ResultSet rs = sendQuery("SELECT * FROM patients WHERE " +
+                    "firstname LIKE " + excerpt +
+                    "OR lastname LIKE " + excerpt +
+                    "OR dadsname LIKE " + excerpt);
+
+            addResultsToList(rs, out);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return out;
+    }
+
     @Override
     public List<Patient> getAll() {
 
         List<Patient> out = new ArrayList<>();
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM patients;");
+            ResultSet rs = sendQuery("SELECT * FROM patients");
 
-            while (rs.next()){
-                out.add(new Patient(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5)));
-            }
+           addResultsToList(rs, out);
 
         } catch (SQLException e) {
 
@@ -38,8 +65,7 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
     public Patient getEntityById(Long id) {
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM patients WHERE id = "
-                    + id);
+            ResultSet rs = sendQuery("SELECT * FROM patients WHERE id = " + id);
 
             if (rs.next())
                 return new Patient(

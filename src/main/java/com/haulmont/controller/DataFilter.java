@@ -1,6 +1,5 @@
 package com.haulmont.controller;
 
-import com.haulmont.model.entities.Human;
 import com.haulmont.model.entities.Receipt;
 
 import java.util.ArrayList;
@@ -8,34 +7,15 @@ import java.util.List;
 
 public class DataFilter {
 
-    private DataService dataService;
+    public static List<Receipt> filterByDoctor(List<Receipt> receipts, String excerpt){
 
-    public DataFilter(DataService dataService){
-
-        this.dataService = dataService;
-    }
-
-    private List<Human> findHumansByExcerpt(List<Human> humans, String excerpt){
-
-        List<Human> out = new ArrayList<>();
-
-        for (Human h: humans) {
-
-            if (h.contains(excerpt))
-
-                out.add(h);
-        }
-
-        return out;
-    }
-
-    public List<Receipt> filterByDoctor(List<Receipt> receipts, String excerpt){
+        if (excerpt.isEmpty()) return receipts;
 
         List<Receipt> out = new ArrayList<>();
 
         for (Receipt r: receipts) {
 
-            if (dataService.getDoctorByID(r.getDoctorID()).contains(excerpt))
+            if (DataService.getDoctorByID(r.getDoctorID()).contains(excerpt))
 
                 out.add(r);
         }
@@ -44,13 +24,15 @@ public class DataFilter {
     }
 
 
-    public List<Receipt> filterByPatient(List<Receipt> receipts, String excerpt){
+    public static List<Receipt> filterByPatient(List<Receipt> receipts, String excerpt){
+
+        if (excerpt.isEmpty()) return receipts;
 
         List<Receipt> out = new ArrayList<>();
 
         for (Receipt r: receipts) {
 
-            if (dataService.getPatientByID(r.getPatientID()).contains(excerpt))
+            if (DataService.getPatientByID(r.getPatientID()).contains(excerpt))
 
                 out.add(r);
         }
@@ -58,7 +40,9 @@ public class DataFilter {
         return out;
     }
 
-    public List<Receipt> filterByDescription(List<Receipt> receipts, String excerpt){
+    public static List<Receipt> filterByDescription(List<Receipt> receipts, String excerpt){
+
+        if (excerpt.isEmpty()) return receipts;
 
         List<Receipt> out = new ArrayList<>();
 
@@ -72,7 +56,9 @@ public class DataFilter {
         return out;
     }
 
-    public List<Receipt> filterByPriority(List<Receipt> receipts, Receipt.Prior prior){
+    public static List<Receipt> filterByPriority(List<Receipt> receipts, Receipt.Prior prior){
+
+        if (prior == null) return receipts;
 
         List<Receipt> out = new ArrayList<>();
 

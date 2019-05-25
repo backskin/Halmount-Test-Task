@@ -17,7 +17,7 @@ CREATE TABLE patients (
 CREATE TABLE receipts (
     id BIGINT IDENTITY PRIMARY KEY,
     description VARCHAR(512),
-    docID BIGINT NOT NULL,
+    doctorID BIGINT NOT NULL,
     patientID BIGINT NOT NULL,
     creationDate DATE NOT NULL,
     validity INTEGER NOT NULL,

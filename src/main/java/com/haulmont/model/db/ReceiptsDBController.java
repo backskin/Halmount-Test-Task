@@ -14,29 +14,35 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
         super();
     }
 
+    private void addResultsToList(ResultSet rs, List<Receipt> out) throws SQLException {
+
+        while (rs.next()){
+            out.add( new Receipt(
+                    rs.getLong(1),
+                    rs.getString(2),
+                    rs.getLong(3),
+                    rs.getLong(4),
+                    rs.getDate(5),
+                    rs.getInt(6),
+                    rs.getInt(7))
+            );
+        }
+    }
+
     @Override
     public List<Receipt> getAll() {
-        List<Receipt> receipts = new ArrayList<>();
+
+        List<Receipt> out = new ArrayList<>();
         try {
 
             ResultSet rs = sendQuery("SELECT * FROM receipts");
+            addResultsToList(rs, out);
 
-            while (rs.next()){
-                receipts.add( new Receipt(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getLong(3),
-                        rs.getLong(4),
-                        rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getInt(7))
-                );
-            }
         }catch (SQLException e){
             e.getMessage();
         }
 
-        return receipts;
+        return out;
     }
 
     @Override
@@ -100,9 +106,9 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
 
     @Override
     public boolean create(Receipt entity) {
-        try {
 
-            sendQuery("INSERT INTO receipts (description, docID, patientID, creationDate, expiration, priority) values ("
+        try {
+            sendQuery("INSERT INTO receipts (description, doctorID, patientID, creationDate, validity, priority) values ("
                     + entity.getDescription() + ", "
                     + entity.getDoctorID() + ", "
                     + entity.getPatientID() + ", DATE '"
@@ -119,28 +125,74 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
         }
     }
 
-    public List<Receipt> chargeOf(long doctorID){
 
-        List<Receipt> receipts = new ArrayList<>();
+    public List<Receipt> filterByDescription(String excerpt){
+
+        List<Receipt> out = new ArrayList<>();
+
+        try {
+
+            ResultSet rs = sendQuery("SELECT * FROM receipts WHERE " +
+                    "description LIKE " + excerpt);
+
+            addResultsToList(rs,out);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return out;
+    }
+
+    public List<Receipt> filterByDoctor(long doctorID){
+
+        List<Receipt> out = new ArrayList<>();
 
         try {
             ResultSet rs = sendQuery("SELECT * FROM receipts WHERE doctorID = " + doctorID);
 
-            while (rs.next()){
-                receipts.add( new Receipt(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getLong(3),
-                        rs.getLong(4),
-                        rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getInt(7)
-                ));
-            }
+            addResultsToList(rs, out);
+
         } catch (SQLException e) {
             e.getMessage();
         }
 
-        return receipts;
+        return out;
+    }
+
+    public List<Receipt> filterByPatient(long patientID) {
+
+        List<Receipt> out = new ArrayList<>();
+
+        try {
+
+            ResultSet rs = sendQuery("SELECT * FROM receipts WHERE " +
+                    "patientID = " + patientID);
+
+            addResultsToList(rs,out);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return out;
+    }
+
+    public List<Receipt> filterByPrior(Receipt.Prior prior){
+
+        List<Receipt> out = new ArrayList<>();
+
+        try {
+
+            ResultSet rs = sendQuery("SELECT * FROM receipts WHERE " +
+                    "priority = " + prior.ordinal());
+
+            addResultsToList(rs, out);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return out;
     }
 }
