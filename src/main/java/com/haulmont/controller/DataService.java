@@ -91,25 +91,30 @@ public class DataService {
 
     public static void deleteDoctor(Doctor doctor) throws Exception {
 
-        if (!doctorsDBController.delete(doctor.getId()))
+        if (!doctorsDBController.delete(doctor.getId())) {
 
-            throw new Exception("Cannot delete doctor " + doctor.getLastName()
-                    + "because of enlisting in one of extisting receipts!"
+            throw new Exception("Cannot delete doctor '" + doctor.getLastName()
+                    + "' because of enlisting in one of extisting receipts!"
             );
+        }
     }
 
     public static void deletePatient(Patient patient) throws Exception {
 
-            if (!patientsDBController.delete(patient.getId()))
+        if (!patientsDBController.delete(patient.getId())) {
 
-                throw new Exception("Cannot delete patient " + patient.getLastName()
-                        + "because of enlisting in one of extisting receipts!"
-                );
+            throw new Exception("Cannot delete patient '" + patient.getLastName()
+                    + "' because of enlisting in one of extisting receipts!"
+            );
+        }
     }
 
-    public static void deleteReceipt(Receipt receipt){
+    public static void deleteReceipt(Receipt receipt) throws Exception {
 
-        receiptsDBController.delete(receipt.getId());
+        if (!receiptsDBController.delete(receipt.getId())) {
+
+            throw new Exception("Cannot delete receipt id'" + receipt.getId() + "'!");
+        }
     }
 
     public static List<Receipt> getDoctorReceipts(Doctor doctor){

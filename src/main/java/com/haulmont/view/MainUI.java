@@ -153,8 +153,27 @@ public class MainUI extends UI {
 
         receiptGrid.setSizeFull();
 
+
         Layout functionalLayout = new HorizontalLayout();
-        functionalLayout.addComponents(new Button("Add"), new Button("Edit"), new Button("Delete"));
+
+        Button addButton = new Button("Add");
+        Button editButton = new Button("Edit");
+        Button delButton = new Button("Delete");
+
+        TextField descriptFilterField = new TextField();
+        descriptFilterField.setPlaceholder("find description...");
+        TextField doctorFilterField = new TextField();
+        doctorFilterField.setPlaceholder("find doctor...");
+        TextField patientFilterField = new TextField();
+        patientFilterField.setPlaceholder("find patient...");
+
+        NativeSelect<String> priorListSelect = new NativeSelect<>("Prior Filter");
+        priorListSelect.setItems("NORMAL", "CITO", "STATIM");
+
+        Button acceptFilterButton = new Button("Filter");
+
+        functionalLayout.addComponents(addButton,editButton,delButton,
+                descriptFilterField,doctorFilterField,patientFilterField,priorListSelect,acceptFilterButton);
 
         Layout l = new VerticalLayout();
         l.addComponent(functionalLayout);
