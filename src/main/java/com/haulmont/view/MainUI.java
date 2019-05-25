@@ -1,5 +1,6 @@
 package com.haulmont.view;
 
+import com.haulmont.controller.DataFilter;
 import com.haulmont.controller.DataService;
 import com.haulmont.model.entities.Doctor;
 import com.haulmont.model.entities.Human;
@@ -12,7 +13,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
+import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Theme(ValoTheme.THEME_NAME)
 
@@ -65,7 +68,7 @@ public class MainUI extends UI {
 
         editButton.addClickListener(clickEvent -> {
 
-            if (!(doctorGrid.getSelectedItems().isEmpty())){
+            if ((doctorGrid.getSelectionModel().getFirstSelectedItem().isPresent())){
 
                 HumanEditDialog dialog = new HumanEditDialog("Edit Doctor");
                 dialog.asEditDoctor(doctorGrid.getSelectionModel().getFirstSelectedItem().get());
@@ -118,7 +121,7 @@ public class MainUI extends UI {
 
         editButton.addClickListener(clickEvent -> {
 
-            if (!patientGrid.getSelectedItems().isEmpty()) {
+            if (patientGrid.getSelectionModel().getFirstSelectedItem().isPresent()) {
 
                 HumanEditDialog dialog = new HumanEditDialog("Edit Patient");
                 dialog.asEditPatient(patientGrid.getSelectionModel().getFirstSelectedItem().get());
@@ -171,6 +174,37 @@ public class MainUI extends UI {
         priorListSelect.setItems("NORMAL", "CITO", "STATIM");
 
         Button acceptFilterButton = new Button("Filter");
+
+        acceptFilterButton.addClickListener(clickEvent -> {
+
+            List<Receipt> out = DataService.getReceipts();
+
+            if (!descriptFilterField.isEmpty()){
+                out = DataFilter.filterByDescription(out,descriptFilterField.getValue());
+            }
+
+            if (!doctorFilterField.isEmpty()){
+                out = DataFilter.filterByDoctor(out, doctorFilterField.getValue());
+            }
+
+            if (!patientFilterField.isEmpty()){
+                out = DataFilter.filterByPatient(out, patientFilterField.getValue());
+            }
+
+            if (priorListSelect.getSelectedItem().isPresent()){
+
+                Receipt.Prior selectedPrior =
+                        priorListSelect.getSelectedItem().get().equals("NORMAL") ?
+                                Receipt.Prior.NORMAL :
+                                priorListSelect.getSelectedItem().get().equals("CITO") ?
+                                        Receipt.Prior.CITO
+                                        : Receipt.Prior.STATIM;
+                out = DataFilter.filterByPriority(out, selectedPrior);
+            }
+
+            receiptGrid.setItems(out);
+            
+        });
 
         functionalLayout.addComponents(addButton,editButton,delButton,
                 descriptFilterField,doctorFilterField,patientFilterField,priorListSelect,acceptFilterButton);

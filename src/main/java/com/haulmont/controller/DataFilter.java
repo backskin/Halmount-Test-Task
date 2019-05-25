@@ -48,7 +48,7 @@ public class DataFilter {
 
         for (Receipt r: receipts) {
 
-            if (r.getDescription().contains(excerpt))
+            if (r.getDescription().toLowerCase().contains(excerpt.toLowerCase()))
 
                 out.add(r);
         }

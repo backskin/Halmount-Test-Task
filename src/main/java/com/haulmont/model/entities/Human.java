@@ -61,7 +61,10 @@ public abstract class Human {
 
         String[] split = excerpt.split(" ");
         for (String s: split) {
-            if (firstName.contains(s) || lastName.contains(s) || dadsName.contains(s))
+            if (firstName.toLowerCase().contains(s.toLowerCase())
+                    || lastName.toLowerCase().contains(s.toLowerCase())
+                    || dadsName.toLowerCase().contains(s.toLowerCase()))
+
                 return true;
         }
         return false;
