@@ -1,51 +1,47 @@
-package com.haulmont.db;
+package com.haulmont.model.db;
 
-import com.haulmont.model.Doctor;
-
+import com.haulmont.model.entities.Patient;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorsData extends AbstractDBController<Doctor, Long> {
+public class PatientsDBController extends AbstractDBController<Patient, Long> {
 
-    public DoctorsData() {
-        super();
-    }
+    public PatientsDBController(){ super(); }
 
     @Override
-    public List<Doctor> getAll() {
+    public List<Patient> getAll() {
 
-        List<Doctor> out = new ArrayList<>();
+        List<Patient> out = new ArrayList<>();
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors;");
+            ResultSet rs = sendQuery("SELECT * FROM patients;");
 
-            while (rs.next()) {
-                out.add(new Doctor(
+            while (rs.next()){
+                out.add(new Patient(
                         rs.getLong(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5))
-                );
+                        rs.getString(5)));
             }
 
         } catch (SQLException e) {
-            e.getMessage();
+
+            e.printStackTrace();
         }
         return out;
     }
 
     @Override
-    public Doctor getEntityById(Long id) {
+    public Patient getEntityById(Long id) {
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = "
-                    + id.toString() + ";"
-            );
+            ResultSet rs = sendQuery("SELECT * FROM patients WHERE id = "
+                    + id.toString() + ";");
 
-            return new Doctor(
+            return new Patient(
                     rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -53,57 +49,61 @@ public class DoctorsData extends AbstractDBController<Doctor, Long> {
                     rs.getString(5)
             );
 
-        } catch (SQLException e) {
-            e.getMessage();
+        } catch (SQLException e){
+            e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public void update(Doctor entity) {
+    public void update(Patient entity) {
 
         try {
-            sendQuery("UPDATE doctors SET "
+            sendQuery("UPDATE patients SET "
                     + "firstname = '" + entity.getFirstName()
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
-                    + "', spetiality = '" + entity.getSpeciality()
+                    + "', phone = '" + entity.getPhone()
                     + "', WHERE id = " + entity.getId() + ";"
             );
 
         } catch (SQLException e) {
-            e.getMessage();
-        }
 
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean delete(Long id) {
 
         try {
-            sendQuery("DELETE FROM doctors WHERE id = " + id + ";");
+            sendQuery("DELETE FROM patients WHERE id = " + id + ";");
+
             return true;
+
         } catch (SQLException e) {
-            e.getMessage();
+
+            e.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public boolean create(Doctor entity) {
+    public boolean create(Patient entity) {
 
         try {
-            sendQuery("INSERT INTO doctors (firstname, lastname, dadsname, speciality)" +
-                    "VALUES ("
+            sendQuery("INSERT INTO patients (firstname, lastname, dadsname, phone) VALUES ("
                     + entity.getFirstName() + ", "
                     + entity.getLastName() + ", "
                     + entity.getDadsName() + ", "
-                    + entity.getSpeciality() + ");"
+                    + entity.getPhone() + ");"
             );
 
             return true;
+
         } catch (SQLException e) {
-            e.getMessage();
+
+            e.printStackTrace();
             return false;
         }
     }

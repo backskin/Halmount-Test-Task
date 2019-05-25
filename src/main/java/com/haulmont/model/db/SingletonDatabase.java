@@ -1,4 +1,4 @@
-package com.haulmont.db;
+package com.haulmont.model.db;
 
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
@@ -11,26 +11,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
 
-public class MySingletonDatabase {
+public class SingletonDatabase {
 
     private Connection connection;
-    private static MySingletonDatabase instance = null;
+    private static SingletonDatabase instance = null;
 
-    private MySingletonDatabase(){
+    private SingletonDatabase(){
         try {
             Class.forName("org.hsqldb.jdbcDriver");
             connection = DriverManager.getConnection("jdbc:hsqldb:file:database/db", "SA", "");
-            loadDefault();
+
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(System.out);
         }
     }
 
-    public static MySingletonDatabase getInstance(){
+    public static SingletonDatabase getInstance(){
 
         if (instance == null) {
-            instance = new MySingletonDatabase();
+            instance = new SingletonDatabase();
+            instance.loadDefault();
         }
         return instance;
     }

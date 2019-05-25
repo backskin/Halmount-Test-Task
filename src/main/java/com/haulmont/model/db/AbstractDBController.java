@@ -1,14 +1,14 @@
-package com.haulmont.db;
+package com.haulmont.model.db;
 
 import java.sql.*;
 import java.util.List;
 
 public abstract class AbstractDBController<E,K> {
 
-    private MySingletonDatabase db;
+    private SingletonDatabase db;
 
     AbstractDBController() {
-        db = MySingletonDatabase.getInstance();
+        db = SingletonDatabase.getInstance();
     }
 
     public abstract List<E> getAll();

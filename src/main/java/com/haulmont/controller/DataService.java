@@ -1,63 +1,63 @@
-package com.haulmont;
+package com.haulmont.controller;
 
-import com.haulmont.db.DoctorsData;
-import com.haulmont.db.PatientsData;
-import com.haulmont.db.ReceiptsData;
-import com.haulmont.model.Doctor;
-import com.haulmont.model.Patient;
-import com.haulmont.model.Receipt;
+import com.haulmont.model.db.DoctorsDBController;
+import com.haulmont.model.db.PatientsDBController;
+import com.haulmont.model.db.ReceiptsDBController;
+import com.haulmont.model.entities.Doctor;
+import com.haulmont.model.entities.Patient;
+import com.haulmont.model.entities.Receipt;
 import java.util.List;
 
-class DataService {
+public class DataService {
 
-    private DoctorsData doctorsData = new DoctorsData();
-    private PatientsData patientsData = new PatientsData();
-    private ReceiptsData receiptsData = new ReceiptsData();
+    private DoctorsDBController doctorsDBController = new DoctorsDBController();
+    private PatientsDBController patientsDBController = new PatientsDBController();
+    private ReceiptsDBController receiptsDBController = new ReceiptsDBController();
 
     public List<Doctor> getDoctors(){
 
-        return doctorsData.getAll();
+        return doctorsDBController.getAll();
     }
 
     public List<Patient> getPatients(){
 
-        return patientsData.getAll();
+        return patientsDBController.getAll();
     }
 
     public List<Receipt> getReceipts(){
 
-        return receiptsData.getAll();
+        return receiptsDBController.getAll();
     }
 
     public Doctor getDoctorByID(long id){
 
-        return doctorsData.getEntityById(id);
+        return doctorsDBController.getEntityById(id);
     }
 
     public Patient getPatientByID(long id){
 
-        return patientsData.getEntityById(id);
+        return patientsDBController.getEntityById(id);
     }
 
     public Receipt getReceiptByID(long id){
 
-        return receiptsData.getEntityById(id);
+        return receiptsDBController.getEntityById(id);
     }
 
     public void addDoctor(String firstName, String lastName, String dadsName, String spec){
 
-        doctorsData.create(new Doctor(0, firstName, lastName, dadsName, spec));
+        doctorsDBController.create(new Doctor(0, firstName, lastName, dadsName, spec));
     }
 
     public void addPatient(String firstName, String lastName, String dadsName, String phone){
 
-        patientsData.create(new Patient(0, firstName, lastName, dadsName, phone));
+        patientsDBController.create(new Patient(0, firstName, lastName, dadsName, phone));
     }
 
     public void addReceipt(String description, Doctor doctor, Patient patient,
                            java.sql.Date creationDate, int expiration, int prior){
 
-        receiptsData.create(new Receipt(
+        receiptsDBController.create(new Receipt(
                 0, description, doctor.getId(), patient.getId(),
                 creationDate, expiration, prior));
 
@@ -65,22 +65,22 @@ class DataService {
 
     public void updateDoctor(Doctor doctor){
 
-        doctorsData.update(doctor);
+        doctorsDBController.update(doctor);
     }
 
     public void updatePatient(Patient patient){
 
-        patientsData.update(patient);
+        patientsDBController.update(patient);
     }
 
     public void updateReceipt(Receipt receipt){
 
-        receiptsData.update(receipt);
+        receiptsDBController.update(receipt);
     }
 
     public void deleteDoctor(Doctor doctor) throws Exception {
 
-        if (!doctorsData.delete(doctor.getId()))
+        if (!doctorsDBController.delete(doctor.getId()))
 
             throw new Exception("Cannot delete doctor " + doctor.getLastName()
                     + "because of enlisting in one of extisting receipts!"
@@ -89,7 +89,7 @@ class DataService {
 
     public void deletePatient(Patient patient) throws Exception {
 
-            if (!patientsData.delete(patient.getId()))
+            if (!patientsDBController.delete(patient.getId()))
 
                 throw new Exception("Cannot delete patient " + patient.getLastName()
                         + "because of enlisting in one of extisting receipts!"
@@ -98,11 +98,11 @@ class DataService {
 
     public void deleteReceipt(Receipt receipt){
 
-        receiptsData.delete(receipt.getId());
+        receiptsDBController.delete(receipt.getId());
     }
 
     public List<Receipt> getDoctorReceipts(Doctor doctor){
 
-        return receiptsData.chargeOf(doctor.getId());
+        return receiptsDBController.chargeOf(doctor.getId());
     }
 }

@@ -1,7 +1,7 @@
 package com.haulmont;
 
-import com.haulmont.db.MySingletonDatabase;
-import com.haulmont.model.Receipt;
+import com.haulmont.model.db.SingletonDatabase;
+import com.haulmont.model.entities.Receipt;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,13 +16,13 @@ public class TestMain {
 
     public static void test2(){
 
-        MySingletonDatabase database = MySingletonDatabase.getInstance();
+        SingletonDatabase database = SingletonDatabase.getInstance();
     }
 
 
     public static void inittest(){
 
-        MySingletonDatabase database = MySingletonDatabase.getInstance();
+        SingletonDatabase database = SingletonDatabase.getInstance();
 
         try {
             Statement st = database.createStatement();

@@ -1,4 +1,4 @@
-package com.haulmont.model;
+package com.haulmont.model.entities;
 import java.util.Date;
 
 public class Receipt {

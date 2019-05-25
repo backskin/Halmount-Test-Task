@@ -1,47 +1,51 @@
-package com.haulmont.db;
+package com.haulmont.model.db;
 
-import com.haulmont.model.Patient;
+import com.haulmont.model.entities.Doctor;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientsData extends AbstractDBController<Patient, Long> {
+public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
 
-    public PatientsData(){ super(); }
+    public DoctorsDBController() {
+        super();
+    }
 
     @Override
-    public List<Patient> getAll() {
+    public List<Doctor> getAll() {
 
-        List<Patient> out = new ArrayList<>();
+        List<Doctor> out = new ArrayList<>();
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM patients;");
+            ResultSet rs = sendQuery("SELECT * FROM doctors;");
 
-            while (rs.next()){
-                out.add(new Patient(
+            while (rs.next()) {
+                out.add(new Doctor(
                         rs.getLong(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5)));
+                        rs.getString(5))
+                );
             }
 
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            e.getMessage();
         }
         return out;
     }
 
     @Override
-    public Patient getEntityById(Long id) {
+    public Doctor getEntityById(Long id) {
 
         try {
-            ResultSet rs = sendQuery("SELECT * FROM patients WHERE id = "
-                    + id.toString() + ";");
+            ResultSet rs = sendQuery("SELECT * FROM doctors WHERE id = "
+                    + id.toString() + ";"
+            );
 
-            return new Patient(
+            return new Doctor(
                     rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -49,61 +53,57 @@ public class PatientsData extends AbstractDBController<Patient, Long> {
                     rs.getString(5)
             );
 
-        } catch (SQLException e){
-            e.printStackTrace();
+        } catch (SQLException e) {
+            e.getMessage();
             return null;
         }
     }
 
     @Override
-    public void update(Patient entity) {
+    public void update(Doctor entity) {
 
         try {
-            sendQuery("UPDATE patients SET "
+            sendQuery("UPDATE doctors SET "
                     + "firstname = '" + entity.getFirstName()
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
-                    + "', phone = '" + entity.getPhone()
+                    + "', spetiality = '" + entity.getSpeciality()
                     + "', WHERE id = " + entity.getId() + ";"
             );
 
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            e.getMessage();
         }
+
     }
 
     @Override
     public boolean delete(Long id) {
 
         try {
-            sendQuery("DELETE FROM patients WHERE id = " + id + ";");
-
+            sendQuery("DELETE FROM doctors WHERE id = " + id + ";");
             return true;
-
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            e.getMessage();
             return false;
         }
     }
 
     @Override
-    public boolean create(Patient entity) {
+    public boolean create(Doctor entity) {
 
         try {
-            sendQuery("INSERT INTO patients (firstname, lastname, dadsname, phone) VALUES ("
+            sendQuery("INSERT INTO doctors (firstname, lastname, dadsname, speciality)" +
+                    "VALUES ("
                     + entity.getFirstName() + ", "
                     + entity.getLastName() + ", "
                     + entity.getDadsName() + ", "
-                    + entity.getPhone() + ");"
+                    + entity.getSpeciality() + ");"
             );
 
             return true;
-
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            e.getMessage();
             return false;
         }
     }

@@ -1,6 +1,6 @@
-package com.haulmont.db;
+package com.haulmont.model.db;
 
-import com.haulmont.model.Receipt;
+import com.haulmont.model.entities.Receipt;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReceiptsData extends AbstractDBController<Receipt, Long> {
+public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
 
-    public ReceiptsData(){
+    public ReceiptsDBController(){
         super();
     }
 

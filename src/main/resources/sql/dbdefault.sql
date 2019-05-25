@@ -1,3 +1,7 @@
+IF NOT EXISTS (SELECT * FROM PUBLIC.TABLES WHERE TABLE_NAME = 'doctors')
+THEN
+BEGIN
+
 CREATE TABLE doctors (
     id BIGINT IDENTITY PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
@@ -25,3 +29,6 @@ CREATE TABLE receipts (
     FOREIGN KEY (docID) REFERENCES doctors(id),
     FOREIGN KEY (patientID) REFERENCES patients(id)
 );
+
+END
+END IF

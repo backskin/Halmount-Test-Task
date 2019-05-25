@@ -1,7 +1,7 @@
-package com.haulmont;
+package com.haulmont.controller;
 
-import com.haulmont.model.Human;
-import com.haulmont.model.Receipt;
+import com.haulmont.model.entities.Human;
+import com.haulmont.model.entities.Receipt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class DataFilter {
 
     private DataService dataService;
 
-    DataFilter(DataService dataService){
+    public DataFilter(DataService dataService){
 
         this.dataService = dataService;
     }

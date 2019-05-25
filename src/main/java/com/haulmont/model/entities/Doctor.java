@@ -1,4 +1,4 @@
-package com.haulmont.model;
+package com.haulmont.model.entities;
 
 public class Doctor extends Human{
 
