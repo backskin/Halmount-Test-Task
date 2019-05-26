@@ -62,7 +62,7 @@ class ReceiptEditDialog extends Window {
         verticalLayout.addComponents(centerLayout, hLayout);
 
         verticalLayout.setComponentAlignment(centerLayout, Alignment.TOP_CENTER);
-        verticalLayout.setComponentAlignment(hLayout, Alignment.BOTTOM_CENTER);
+        verticalLayout.setComponentAlignment(hLayout, Alignment.BOTTOM_RIGHT);
 
         cancel.addClickListener(clickEvent -> close());
 
