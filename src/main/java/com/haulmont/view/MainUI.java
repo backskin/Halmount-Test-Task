@@ -36,6 +36,21 @@ public class MainUI extends UI {
         setContent(tabSheet);
     }
 
+    private void updateDoctors(Grid<Doctor> doctorGrid){
+
+        doctorGrid.setItems(DataService.getDoctors());
+    }
+
+    private void updatePatients(Grid<Patient> patientGrid){
+
+        patientGrid.setItems(DataService.getPatients());
+    }
+
+    private void updateReceipts(Grid<Receipt> receiptGrid){
+
+        receiptGrid.setItems(DataService.getReceipts());
+    }
+
     private void initDoctorsTable(TabSheet tabSheet){
 
         Grid<Doctor> doctorGrid = new Grid<>();
@@ -68,6 +83,11 @@ public class MainUI extends UI {
             HumanEditDialog dialog = new HumanEditDialog("Add new Doctor");
             dialog.asNewDoctor();
             addWindow(dialog);
+
+            if (dialog.isAccepted()){
+
+                updateDoctors(doctorGrid);
+            }
         });
 
         editButton.addClickListener(clickEvent -> {
@@ -77,11 +97,26 @@ public class MainUI extends UI {
                 HumanEditDialog dialog = new HumanEditDialog("Edit Doctor");
                 dialog.asEditDoctor(doctorGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
+
+                if (dialog.isAccepted()){
+
+                    updateDoctors(doctorGrid);
+                }
             }
         });
 
         delButton.addClickListener(clickEvent -> {
 
+            if ((doctorGrid.getSelectionModel().getFirstSelectedItem().isPresent())) {
+
+                DeleteDialog dialog = new DeleteDialog(doctorGrid.getSelectionModel().getFirstSelectedItem().get());
+                addWindow(dialog);
+
+                if (dialog.isAccepted()){
+
+                    updateDoctors(doctorGrid);
+                }
+            }
         });
 
         statButton.addClickListener(clickEvent -> addWindow(new StatsDialog()));
@@ -129,6 +164,11 @@ public class MainUI extends UI {
             HumanEditDialog dialog = new HumanEditDialog("Add new Patient");
             dialog.asNewPatient();
             addWindow(dialog);
+
+            if (dialog.isAccepted()){
+
+                updatePatients(patientGrid);
+            }
         });
 
         editButton.addClickListener(clickEvent -> {
@@ -138,11 +178,26 @@ public class MainUI extends UI {
                 HumanEditDialog dialog = new HumanEditDialog("Edit Patient");
                 dialog.asEditPatient(patientGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
+
+                if (dialog.isAccepted()){
+
+                    updatePatients(patientGrid);
+                }
             }
         });
 
         delButton.addClickListener(clickEvent -> {
 
+            if (patientGrid.getSelectionModel().getFirstSelectedItem().isPresent()) {
+
+                DeleteDialog dialog = new DeleteDialog(patientGrid.getSelectionModel().getFirstSelectedItem().get());
+                addWindow(dialog);
+
+                if (dialog.isAccepted()){
+
+                    updatePatients(patientGrid);
+                }
+            }
         });
 
         functionalLayout.addComponents(addButton,editButton,delButton,filterField,acceptFilterButton);
@@ -168,12 +223,49 @@ public class MainUI extends UI {
 
         receiptGrid.setSizeFull();
 
-
         Layout functionalLayout = new HorizontalLayout();
 
         Button addButton = new Button("Add");
         Button editButton = new Button("Edit");
         Button delButton = new Button("Delete");
+
+        addButton.addClickListener(clickEvent -> {
+
+            ReceiptEditDialog dialog = new ReceiptEditDialog();
+            addWindow(dialog);
+
+            if (dialog.isAccepted()) {
+
+                updateReceipts(receiptGrid);
+            }
+        });
+
+        editButton.addClickListener(clickEvent -> {
+
+            if (receiptGrid.getSelectionModel().getFirstSelectedItem().isPresent()){
+
+                ReceiptEditDialog dialog = new ReceiptEditDialog(receiptGrid.getSelectionModel().getFirstSelectedItem().get());
+                addWindow(dialog);
+
+                if (dialog.isAccepted()) {
+
+                    updateReceipts(receiptGrid);
+                }
+            }
+        });
+
+        delButton.addClickListener(clickEvent -> {
+            if (receiptGrid.getSelectionModel().getFirstSelectedItem().isPresent()){
+
+                DeleteDialog dialog = new DeleteDialog(receiptGrid.getSelectionModel().getFirstSelectedItem().get());
+                addWindow(dialog);
+
+                if (dialog.isAccepted()){
+
+                    updateReceipts(receiptGrid);
+                }
+            }
+        });
 
         TextField descriptFilterField = new TextField();
         descriptFilterField.setPlaceholder("find description...");
@@ -182,12 +274,12 @@ public class MainUI extends UI {
         TextField patientFilterField = new TextField();
         patientFilterField.setPlaceholder("find patient...");
 
-        NativeSelect<String> priorListSelect = new NativeSelect<>();
-        priorListSelect.setItems("NORMAL", "CITO", "STATIM");
+        NativeSelect<Receipt.Prior> priorListSelect = new NativeSelect<>();
+        priorListSelect.setItems(Receipt.Prior.values());
 
-        Button acceptFilterButton = new Button("Filter");
+        Button filterButton = new Button("Filter");
 
-        acceptFilterButton.addClickListener(clickEvent -> {
+        filterButton.addClickListener(clickEvent -> {
 
             List<Receipt> out = DataService.getReceipts();
 
@@ -205,12 +297,7 @@ public class MainUI extends UI {
 
             if (priorListSelect.getSelectedItem().isPresent()){
 
-                Receipt.Prior selectedPrior =
-                        priorListSelect.getSelectedItem().get().equals("NORMAL") ?
-                                Receipt.Prior.NORMAL :
-                                priorListSelect.getSelectedItem().get().equals("CITO") ?
-                                        Receipt.Prior.CITO
-                                        : Receipt.Prior.STATIM;
+                Receipt.Prior selectedPrior = priorListSelect.getSelectedItem().get();
                 out = DataFilter.filterByPriority(out, selectedPrior);
             }
 
@@ -220,7 +307,7 @@ public class MainUI extends UI {
 
         functionalLayout.addComponents(addButton,editButton,delButton,
                 new Label("<hr />",ContentMode.HTML),
-                descriptFilterField,doctorFilterField,patientFilterField,priorListSelect,acceptFilterButton);
+                descriptFilterField,doctorFilterField,patientFilterField,priorListSelect,filterButton);
 
         Layout l = new VerticalLayout();
         l.addComponent(functionalLayout);

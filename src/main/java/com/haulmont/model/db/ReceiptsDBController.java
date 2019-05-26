@@ -24,7 +24,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
                     rs.getLong(4),
                     rs.getDate(5),
                     rs.getInt(6),
-                    rs.getInt(7))
+                    Receipt.Prior.get(rs.getInt(7)))
             );
         }
     }
@@ -59,7 +59,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
                     rs.getLong(4),
                     rs.getDate(5),
                     rs.getInt(6),
-                    rs.getInt(7)
+                    Receipt.Prior.get(rs.getInt(7))
                 );
 
         } catch (SQLException e){

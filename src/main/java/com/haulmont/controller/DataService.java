@@ -55,22 +55,19 @@ public class DataService {
         return receiptsDBController.getEntityById(id);
     }
 
-    public static void addDoctor(String firstName, String lastName, String dadsName, String spec){
+    public static void addDoctor(Doctor entity){
 
-        doctorsDBController.create(new Doctor(0, firstName, lastName, dadsName, spec));
+        doctorsDBController.create(entity);
     }
 
-    public static void addPatient(String firstName, String lastName, String dadsName, String phone){
+    public static void addPatient(Patient entity){
 
-        patientsDBController.create(new Patient(0, firstName, lastName, dadsName, phone));
+        patientsDBController.create(entity);
     }
 
-    public static void addReceipt(String description, Doctor doctor, Patient patient,
-                           java.sql.Date creationDate, int expiration, int prior){
+    public static void addReceipt(Receipt entity){
 
-        receiptsDBController.create(new Receipt(
-                0, description, doctor.getId(), patient.getId(),
-                creationDate, expiration, prior));
+        receiptsDBController.create(entity);
 
     }
 

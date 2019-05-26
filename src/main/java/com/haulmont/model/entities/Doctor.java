@@ -16,4 +16,9 @@ public class Doctor extends Human{
     void setSpeciality(String speciality) {
         this.speciality = speciality;
     }
+
+    public String toString(){
+
+        return getLastName() + " " + getFirstName().charAt(0) + ". " + getDadsName().charAt(0) + ". " + speciality;
+    }
 }

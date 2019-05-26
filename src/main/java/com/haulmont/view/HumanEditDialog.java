@@ -15,10 +15,17 @@ public class HumanEditDialog extends Window {
     private Button ok = new Button("OK");
     private Button cancel = new Button("CANCEL");
 
+    private boolean accepted = false;
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
     HumanEditDialog(String caption) {
 
         super(caption);
         setModal(true);
+        setResizable(false);
 
         Layout h = new HorizontalLayout();
         h.addComponents(ok,cancel);
@@ -29,7 +36,7 @@ public class HumanEditDialog extends Window {
         subContent.setComponentAlignment(dNameField, Alignment.TOP_CENTER);
         subContent.setComponentAlignment(h, Alignment.TOP_CENTER);
 
-        cancel.addClickListener(clickEvent1 -> close());
+        cancel.addClickListener(clickEvent -> close());
         setContent(subContent);
     }
 
@@ -40,7 +47,13 @@ public class HumanEditDialog extends Window {
         subContent.addComponent(specField,3);
         subContent.setComponentAlignment(specField, Alignment.TOP_CENTER);
 
-        ok.addClickListener(clickEvent -> close());
+        ok.addClickListener(clickEvent -> {
+
+
+
+            accepted = true;
+            close();
+        });
     }
 
     void asEditDoctor(Doctor entity){
@@ -53,6 +66,14 @@ public class HumanEditDialog extends Window {
 
         TextField spec = (TextField) subContent.getComponent(3);
         spec.setValue(entity.getSpeciality());
+
+        ok.addClickListener(clickEvent -> {
+
+
+
+            accepted = true;
+            close();
+        });
     }
 
     public void asNewPatient(){
@@ -62,7 +83,13 @@ public class HumanEditDialog extends Window {
         subContent.addComponent(phoneField, 3);
         subContent.setComponentAlignment(phoneField, Alignment.TOP_CENTER);
 
-        ok.addClickListener(clickEvent -> close());
+        ok.addClickListener(clickEvent -> {
+
+
+
+            accepted = true;
+            close();
+        });
     }
 
     public void asEditPatient(Patient entity){
@@ -75,5 +102,13 @@ public class HumanEditDialog extends Window {
 
         TextField phone = (TextField) subContent.getComponent(3);
         phone.setValue(entity.getPhone());
+
+        ok.addClickListener(clickEvent -> {
+
+
+
+            accepted = true;
+            close();
+        });
     }
 }

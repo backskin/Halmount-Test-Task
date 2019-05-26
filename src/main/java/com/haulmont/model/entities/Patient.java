@@ -16,4 +16,8 @@ public class Patient extends Human {
     void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String toString(){
+        return getLastName() + " " + getFirstName().charAt(0) + ". " + getDadsName().charAt(0) + ".  t: " + phone;
+    }
 }

@@ -11,6 +11,8 @@ public class StatsDialog extends Window {
     StatsDialog(){
         super("Doctors Statistics");
         setModal(true);
+        setResizable(false);
+
         VerticalLayout verticalLayout = new VerticalLayout();
 
         List<Doctor> list = DataService.getDoctors();

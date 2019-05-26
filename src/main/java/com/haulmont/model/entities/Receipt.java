@@ -11,6 +11,20 @@ public class Receipt {
 
             return null;
         }
+
+        public String toString(){
+            switch (this){
+
+                case NORMAL:
+                    return "NORMAL";
+                case CITO:
+                    return "CITO";
+                case STATIM:
+                    return "STATIM";
+            }
+
+            return "";
+        }
     }
 
     private long id;
@@ -21,14 +35,14 @@ public class Receipt {
     private int validity;
     private Prior prior;
 
-    public Receipt(long id, String description, long doctorID, long patientID, java.sql.Date creationDate, int validity, int prior) {
+    public Receipt(long id, String description, long doctorID, long patientID, java.sql.Date creationDate, int validity, Prior prior) {
         this.id = id;
         this.description = description;
         this.patientID = patientID;
         this.doctorID = doctorID;
         this.creationDate = creationDate;
         this.validity = validity;
-        this.prior = Prior.get(prior);
+        this.prior = prior;
     }
 
     public long getId() {
