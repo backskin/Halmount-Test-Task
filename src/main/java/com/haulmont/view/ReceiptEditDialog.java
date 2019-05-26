@@ -29,11 +29,11 @@ class ReceiptEditDialog extends Window {
 
     private boolean accepted = false;
 
-    public boolean isAccepted() {
+    boolean isAccepted() {
         return accepted;
     }
 
-    public Button getOk() {
+    Button getOk() {
         return ok;
     }
 
@@ -41,6 +41,7 @@ class ReceiptEditDialog extends Window {
 
         setModal(true);
         setResizable(false);
+        setClosable(false);
 
         description.setPlaceholder("put receipt here...");
 
@@ -68,37 +69,46 @@ class ReceiptEditDialog extends Window {
         setContent(verticalLayout);
     }
 
-    private void showError(String msg){
-
-        Label errorLabel = new Label(msg);
-        verticalLayout.addComponent(errorLabel,0);
-
-        verticalLayout.removeComponent(errorLabel);
-    }
-
     private boolean wrongValues(){
 
         try {
 
-            Integer.parseInt(validationField.getValue());
 
             if (dateField.getValue().isBefore(LocalDate.of(1991, 1, 1))
                     || dateField.getValue().isAfter(LocalDate.now()))
-                throw new Exception("Неверная дата!");
+                throw new Exception("Data issue! The creation date is out of bounds [1991 - now]!");
 
             if (!patientSelect.getSelectedItem().isPresent()
                     || !docSelect.getSelectedItem().isPresent()
                     || !priorSelect.getSelectedItem().isPresent()
+                    || validationField.isEmpty()
                     || description.isEmpty()){
 
-                throw new Exception("Не введены все значения!");
+                throw new Exception("Some fields are empty:"
+                        + (!docSelect.getSelectedItem().isPresent() ? " 'Doctor selection'" : "")
+                        + (!patientSelect.getSelectedItem().isPresent() ? " 'Patient selection'" : "")
+                        + (description.isEmpty() ? " 'Description Field'" : "")
+                        + (validationField.isEmpty() ? " 'Validation Field'" : "")
+                        + (!priorSelect.getSelectedItem().isPresent() ? " 'Priority selection'" : ""));
             }
+
+            int days;
+
+            try {
+                days = Integer.parseInt(validationField.getValue());
+            } catch (Exception e){
+                e.getMessage();
+                throw new Exception("Wrong input in 'validation' field!");
+            }
+
+            if (days < 1 || days > 365)
+                throw new Exception("'Validation' period is out of bounds [1 ; 365]!");
 
             return false;
 
         } catch (Exception e){
 
-            showError(e.getLocalizedMessage());
+            new ErrorMessage(e);
             return true;
         }
     }

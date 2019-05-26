@@ -72,9 +72,9 @@ public class MainUI extends UI {
         TextField filterField = new TextField();
         filterField.setPlaceholder("filter by name");
 
-        Button acceptFilterButton = new Button("Filter");
+        Button filterButton = new Button("Filter");
 
-        acceptFilterButton.addClickListener(clickEvent ->
+        filterButton.addClickListener(clickEvent ->
                 doctorGrid.setItems(DataService.findDoctor(filterField.getValue())));
 
         addButton.addClickListener(clickEvent -> {
@@ -129,12 +129,8 @@ public class MainUI extends UI {
 
         statButton.addClickListener(clickEvent -> addWindow(new StatsDialog()));
 
-
-        functionalLayout.addComponents(statButton, new Label("<hr />", ContentMode.HTML));
-
-        functionalLayout.addComponents(addButton,editButton,delButton,
-                new Label("<hr />",ContentMode.HTML),
-                filterField,acceptFilterButton);
+        functionalLayout.addComponents(statButton, addButton,editButton,delButton,
+                filterField,filterButton);
 
 
         Layout l = new VerticalLayout();
@@ -232,7 +228,7 @@ public class MainUI extends UI {
         receiptGrid.addColumn(Receipt::getDescription).setCaption("Description");
         receiptGrid.addColumn(r -> DataService.getDoctorByID(r.getDoctorID()).getFullName()).setCaption("Doctor");
         receiptGrid.addColumn(r -> DataService.getPatientByID(r.getPatientID()).getFullName()).setCaption("Patient");
-        receiptGrid.addColumn(r -> (new SimpleDateFormat("dd-MM-yyyy")).format(r.getCreationDate())).setCaption("Creation Date");
+        receiptGrid.addColumn(r -> (new SimpleDateFormat("yyyy-MM-dd")).format(r.getCreationDate())).setCaption("Creation Date");
         receiptGrid.addColumn(Receipt::getValidity).setCaption("Validity (days)");
         receiptGrid.addColumn(Receipt::getPrior).setCaption("Priority");
 

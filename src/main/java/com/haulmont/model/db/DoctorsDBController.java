@@ -98,8 +98,8 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
                     + "firstname = '" + entity.getFirstName()
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
-                    + "', spetiality = '" + entity.getSpeciality()
-                    + "', WHERE id = " + entity.getId()
+                    + "', speciality = '" + entity.getSpeciality()
+                    + "' WHERE id = " + entity.getId()
             );
 
         } catch (SQLException e) {
@@ -126,8 +126,8 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
 
         try {
             sendQuery("INSERT INTO doctors (firstname, lastname, dadsname, speciality)" +
-                    "VALUES ('"
-                    + entity.getFirstName() + "', "
+                    " VALUES ('"
+                    + entity.getFirstName() + "', '"
                     + entity.getLastName() + "', '"
                     + entity.getDadsName() + "', '"
                     + entity.getSpeciality() + "')"

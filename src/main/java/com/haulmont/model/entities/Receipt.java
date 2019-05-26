@@ -1,4 +1,5 @@
 package com.haulmont.model.entities;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Receipt {
@@ -95,5 +96,13 @@ public class Receipt {
 
     public void setPrior(Prior prior) {
         this.prior = prior;
+    }
+
+    @Override
+    public String toString() {
+
+        return description.substring(0,description.length() > 12 ? 12 : description.length()-1 )
+                + "... " + (new SimpleDateFormat("dd-MM-yyyy")).format(creationDate)
+                + "  " + prior.toString();
     }
 }

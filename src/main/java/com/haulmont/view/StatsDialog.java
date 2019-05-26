@@ -6,12 +6,13 @@ import com.vaadin.ui.*;
 
 import java.util.List;
 
-public class StatsDialog extends Window {
+class StatsDialog extends Window {
 
     StatsDialog(){
         super("Doctors Statistics");
         setModal(true);
         setResizable(false);
+        setClosable(false);
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
