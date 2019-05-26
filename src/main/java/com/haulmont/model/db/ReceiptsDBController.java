@@ -39,7 +39,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
             addResultsToList(rs, out);
 
         }catch (SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
         return out;
@@ -63,7 +63,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
                 );
 
         } catch (SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
         return null;
@@ -76,17 +76,18 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
 
         try {
 
-            sendQuery("UPDATE receipts set "
-                    + "description = " + entity.getDescription()
-                    + ", docID = " + entity.getDoctorID()
+            sendQuery("UPDATE receipts SET "
+                    + "description = '" + entity.getDescription()
+                    + "', doctorID = " + entity.getDoctorID()
                     + ", patientID = " + entity.getPatientID()
-                    + ", creationDate = " + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate()))
-                    + ", validity = " + entity.getValidity()
-                    + "priority = " + entity.getPrior().ordinal()
+                    + ", creationDate = DATE '" + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate()))
+                    + "', validity = " + entity.getValidity()
+                    + ", priority = " + entity.getPrior().ordinal()
+                    + " WHERE id = " + entity.getId()
             );
 
         } catch (SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -99,7 +100,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
             return true;
 
         } catch (SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -108,18 +109,18 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
     public boolean create(Receipt entity) {
 
         try {
-            sendQuery("INSERT INTO receipts (description, doctorID, patientID, creationDate, validity, priority) values ("
-                    + entity.getDescription() + ", "
+            sendQuery("INSERT INTO receipts (description, doctorID, patientID, creationDate, validity, priority) values ('"
+                    + entity.getDescription() + "', "
                     + entity.getDoctorID() + ", "
                     + entity.getPatientID() + ", DATE '"
                     + (new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreationDate())) + "', "
                     + entity.getValidity() + ", "
-                    + entity.getPrior().ordinal() + ");"
+                    + entity.getPrior().ordinal() + ")"
             );
             return true;
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
             return false;
 
         }
@@ -138,7 +139,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
             addResultsToList(rs,out);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return out;
@@ -154,7 +155,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
             addResultsToList(rs, out);
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
         return out;
@@ -172,7 +173,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
             addResultsToList(rs,out);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return out;
@@ -190,7 +191,7 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
             addResultsToList(rs, out);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return out;

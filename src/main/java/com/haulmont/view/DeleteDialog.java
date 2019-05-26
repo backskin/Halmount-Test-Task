@@ -15,6 +15,10 @@ public class DeleteDialog extends Window {
     private HorizontalLayout hLayout = new HorizontalLayout(ok,cancel);
     private VerticalLayout layout = new VerticalLayout(warning, hLayout);
 
+    public Button getOk() {
+        return ok;
+    }
+
     public boolean isAccepted() {
         return accepted;
     }

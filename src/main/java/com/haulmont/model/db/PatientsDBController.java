@@ -24,7 +24,6 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
         }
     }
 
-
         public List<Patient> find(String excerpt){
 
         List<Patient> out = new ArrayList<>();
@@ -43,7 +42,7 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
             addResultsToList(rs, out);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return out;
@@ -60,8 +59,7 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
            addResultsToList(rs, out);
 
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return out;
     }
@@ -82,7 +80,7 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
                 );
 
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return null;
@@ -97,12 +95,11 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
                     + "', phone = '" + entity.getPhone()
-                    + "', WHERE id = " + entity.getId() + ";"
+                    + "' WHERE id = " + entity.getId()
             );
 
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -115,8 +112,7 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
             return true;
 
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -125,18 +121,17 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
     public boolean create(Patient entity) {
 
         try {
-            sendQuery("INSERT INTO patients (firstname, lastname, dadsname, phone) VALUES ("
-                    + entity.getFirstName() + ", "
-                    + entity.getLastName() + ", "
-                    + entity.getDadsName() + ", "
-                    + entity.getPhone() + ");"
+            sendQuery("INSERT INTO patients (firstname, lastname, dadsname, phone) VALUES ('"
+                    + entity.getFirstName() + "', '"
+                    + entity.getLastName() + "', '"
+                    + entity.getDadsName() + "', '"
+                    + entity.getPhone() + "')"
             );
 
             return true;
 
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }

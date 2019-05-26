@@ -8,17 +8,20 @@ public class HumanEditDialog extends Window {
 
     private VerticalLayout subContent = new VerticalLayout();
 
-    TextField lNameField = new TextField("Last Name");
-    TextField fNameField = new TextField("First Name");
-    TextField dNameField = new TextField("Second Name");
+    private TextField lNameField = new TextField("Last Name");
+    private TextField fNameField = new TextField("First Name");
+    private TextField dNameField = new TextField("Second Name");
 
     private Button ok = new Button("OK");
-    private Button cancel = new Button("CANCEL");
 
     private boolean accepted = false;
 
     public boolean isAccepted() {
         return accepted;
+    }
+
+    public Button getOk() {
+        return ok;
     }
 
     HumanEditDialog(String caption) {
@@ -28,7 +31,8 @@ public class HumanEditDialog extends Window {
         setResizable(false);
 
         Layout h = new HorizontalLayout();
-        h.addComponents(ok,cancel);
+        Button cancel = new Button("CANCEL");
+        h.addComponents(ok, cancel);
 
         subContent.addComponents(lNameField,fNameField,dNameField, h);
         subContent.setComponentAlignment(lNameField, Alignment.TOP_CENTER);

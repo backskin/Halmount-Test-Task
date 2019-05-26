@@ -56,7 +56,6 @@ public class MainUI extends UI {
         Grid<Doctor> doctorGrid = new Grid<>();
 
         doctorGrid.setItems(DataService.getDoctors());
-        doctorGrid.addColumn(Human::getId).setCaption("ID");
         doctorGrid.addColumn(Human::getFullName).setCaption("Name");
         doctorGrid.addColumn(Doctor::getSpeciality).setCaption("Speciality");
 
@@ -84,10 +83,13 @@ public class MainUI extends UI {
             dialog.asNewDoctor();
             addWindow(dialog);
 
-            if (dialog.isAccepted()){
+            dialog.getOk().addClickListener(clickEvent1 -> {
 
-                updateDoctors(doctorGrid);
-            }
+                if (dialog.isAccepted()) {
+
+                    updateDoctors(doctorGrid);
+                }
+            });
         });
 
         editButton.addClickListener(clickEvent -> {
@@ -98,10 +100,13 @@ public class MainUI extends UI {
                 dialog.asEditDoctor(doctorGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
 
-                if (dialog.isAccepted()){
+                dialog.getOk().addClickListener(clickEvent1 -> {
 
-                    updateDoctors(doctorGrid);
-                }
+                    if (dialog.isAccepted()) {
+
+                        updateDoctors(doctorGrid);
+                    }
+                });
             }
         });
 
@@ -112,10 +117,13 @@ public class MainUI extends UI {
                 DeleteDialog dialog = new DeleteDialog(doctorGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
 
-                if (dialog.isAccepted()){
+                dialog.getOk().addClickListener(clickEvent1 -> {
 
-                    updateDoctors(doctorGrid);
-                }
+                    if (dialog.isAccepted()) {
+
+                        updateDoctors(doctorGrid);
+                    }
+                });
             }
         });
 
@@ -141,7 +149,6 @@ public class MainUI extends UI {
 
         Grid<Patient> patientGrid = new Grid<>();
         patientGrid.setItems(DataService.getPatients());
-        patientGrid.addColumn(Human::getId).setCaption("ID");
         patientGrid.addColumn(Human::getFullName).setCaption("Name");
         patientGrid.addColumn(Patient::getPhone).setCaption("Phone");
 
@@ -165,10 +172,13 @@ public class MainUI extends UI {
             dialog.asNewPatient();
             addWindow(dialog);
 
-            if (dialog.isAccepted()){
+            dialog.getOk().addClickListener(clickEvent1 -> {
 
-                updatePatients(patientGrid);
-            }
+                if (dialog.isAccepted()) {
+
+                    updatePatients(patientGrid);
+                }
+            });
         });
 
         editButton.addClickListener(clickEvent -> {
@@ -179,10 +189,13 @@ public class MainUI extends UI {
                 dialog.asEditPatient(patientGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
 
-                if (dialog.isAccepted()){
+                dialog.getOk().addClickListener(clickEvent1 -> {
 
-                    updatePatients(patientGrid);
-                }
+                    if (dialog.isAccepted()) {
+
+                        updatePatients(patientGrid);
+                    }
+                });
             }
         });
 
@@ -193,10 +206,13 @@ public class MainUI extends UI {
                 DeleteDialog dialog = new DeleteDialog(patientGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
 
-                if (dialog.isAccepted()){
+                dialog.getOk().addClickListener(clickEvent1 -> {
 
-                    updatePatients(patientGrid);
-                }
+                    if (dialog.isAccepted()) {
+
+                        updatePatients(patientGrid);
+                    }
+                });
             }
         });
 
@@ -213,7 +229,6 @@ public class MainUI extends UI {
 
         Grid<Receipt> receiptGrid = new Grid<>();
         receiptGrid.setItems(DataService.getReceipts());
-        receiptGrid.addColumn(Receipt::getId).setCaption("ID");
         receiptGrid.addColumn(Receipt::getDescription).setCaption("Description");
         receiptGrid.addColumn(r -> DataService.getDoctorByID(r.getDoctorID()).getFullName()).setCaption("Doctor");
         receiptGrid.addColumn(r -> DataService.getPatientByID(r.getPatientID()).getFullName()).setCaption("Patient");
@@ -234,10 +249,13 @@ public class MainUI extends UI {
             ReceiptEditDialog dialog = new ReceiptEditDialog();
             addWindow(dialog);
 
-            if (dialog.isAccepted()) {
+            dialog.getOk().addClickListener(clickEvent1 -> {
 
-                updateReceipts(receiptGrid);
-            }
+                if (dialog.isAccepted()) {
+
+                    updateReceipts(receiptGrid);
+                }
+            });
         });
 
         editButton.addClickListener(clickEvent -> {
@@ -247,23 +265,32 @@ public class MainUI extends UI {
                 ReceiptEditDialog dialog = new ReceiptEditDialog(receiptGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
 
-                if (dialog.isAccepted()) {
 
-                    updateReceipts(receiptGrid);
-                }
+                dialog.getOk().addClickListener(clickEvent1 -> {
+
+                    if (dialog.isAccepted()) {
+
+                        updateReceipts(receiptGrid);
+                    }
+                });
             }
         });
 
         delButton.addClickListener(clickEvent -> {
+
             if (receiptGrid.getSelectionModel().getFirstSelectedItem().isPresent()){
 
                 DeleteDialog dialog = new DeleteDialog(receiptGrid.getSelectionModel().getFirstSelectedItem().get());
                 addWindow(dialog);
 
-                if (dialog.isAccepted()){
 
-                    updateReceipts(receiptGrid);
-                }
+                dialog.getOk().addClickListener(clickEvent1 -> {
+
+                    if (dialog.isAccepted()) {
+
+                        updateReceipts(receiptGrid);
+                    }
+                });
             }
         });
 

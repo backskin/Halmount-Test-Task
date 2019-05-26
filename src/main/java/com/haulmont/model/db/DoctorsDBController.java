@@ -46,7 +46,7 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
             addResultsToList(rs, out);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return out;
@@ -63,7 +63,7 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
             addResultsToList(rs, out);
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return out;
     }
@@ -84,7 +84,7 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
                 );
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
 
         }
         return null;
@@ -99,11 +99,11 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
                     + "', lastname = '" + entity.getLastName()
                     + "', dadsname = '" + entity.getDadsName()
                     + "', spetiality = '" + entity.getSpeciality()
-                    + "', WHERE id = " + entity.getId() + ";"
+                    + "', WHERE id = " + entity.getId()
             );
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -112,12 +112,11 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
     public boolean delete(Long id) {
 
         try {
-            sendQuery("DELETE FROM doctors WHERE id = " + id + ";");
+            sendQuery("DELETE FROM doctors WHERE id = " + id);
             return true;
 
         } catch (SQLException e) {
-
-            e.getMessage();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -127,16 +126,16 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
 
         try {
             sendQuery("INSERT INTO doctors (firstname, lastname, dadsname, speciality)" +
-                    "VALUES ("
-                    + entity.getFirstName() + ", "
-                    + entity.getLastName() + ", "
-                    + entity.getDadsName() + ", "
-                    + entity.getSpeciality() + ");"
+                    "VALUES ('"
+                    + entity.getFirstName() + "', "
+                    + entity.getLastName() + "', '"
+                    + entity.getDadsName() + "', '"
+                    + entity.getSpeciality() + "')"
             );
 
             return true;
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
             return false;
         }
     }

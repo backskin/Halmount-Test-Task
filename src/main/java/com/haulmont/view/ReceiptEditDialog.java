@@ -22,8 +22,8 @@ class ReceiptEditDialog extends Window {
     private DateField dateField = new DateField("creation date: ");
     private TextField validationField = new TextField("validation time (in days): ");
     private NativeSelect<Receipt.Prior> priorSelect = new NativeSelect<>("Priority:");
+
     private Button ok = new Button("OK");
-    private Button cancel = new Button("CANCEL");
 
     private VerticalLayout verticalLayout = new VerticalLayout();
 
@@ -31,6 +31,10 @@ class ReceiptEditDialog extends Window {
 
     public boolean isAccepted() {
         return accepted;
+    }
+
+    public Button getOk() {
+        return ok;
     }
 
     private void init(){
@@ -51,6 +55,7 @@ class ReceiptEditDialog extends Window {
 
         HorizontalLayout centerLayout = new HorizontalLayout(leftLayout, rightLayout);
 
+        Button cancel = new Button("CANCEL");
         HorizontalLayout hLayout = new HorizontalLayout(ok, cancel);
 
         verticalLayout.addComponents(centerLayout, hLayout);
@@ -63,9 +68,12 @@ class ReceiptEditDialog extends Window {
         setContent(verticalLayout);
     }
 
-    private void showError(String error){
+    private void showError(String msg){
 
+        Label errorLabel = new Label(msg);
+        verticalLayout.addComponent(errorLabel,0);
 
+        verticalLayout.removeComponent(errorLabel);
     }
 
     private boolean wrongValues(){
@@ -89,14 +97,15 @@ class ReceiptEditDialog extends Window {
             return false;
 
         } catch (Exception e){
-            showError(e.getMessage());
+
+            showError(e.getLocalizedMessage());
             return true;
         }
     }
 
-    private Receipt getEntity(){
+    private Receipt getEntity(long id){
 
-        return new Receipt(0,
+        return new Receipt(id,
                 description.getValue(),
                 docSelect.getSelectedItem().get().getId(),
                 patientSelect.getSelectedItem().get().getId(),
@@ -114,9 +123,9 @@ class ReceiptEditDialog extends Window {
 
             if (wrongValues()) return;
 
-            DataService.addReceipt(getEntity());
-            accepted = true;
+            DataService.addReceipt(getEntity(0));
 
+            accepted = true;
             close();
         });
     }
@@ -154,7 +163,8 @@ class ReceiptEditDialog extends Window {
 
             if (wrongValues()) return;
 
-            DataService.addReceipt(getEntity());
+            DataService.updateReceipt(getEntity(receipt.getId()));
+
             accepted = true;
             close();
         });
