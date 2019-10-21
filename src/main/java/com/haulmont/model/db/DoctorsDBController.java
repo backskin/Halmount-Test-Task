@@ -13,7 +13,8 @@ public class DoctorsDBController extends AbstractDBController<Doctor, Long> {
         super();
     }
 
-    private void addResultsToList(ResultSet rs, List<Doctor> out) throws SQLException {
+    @Override
+    protected void addResultsToList(ResultSet rs, List<Doctor> out) throws SQLException {
 
         while (rs.next()){
 

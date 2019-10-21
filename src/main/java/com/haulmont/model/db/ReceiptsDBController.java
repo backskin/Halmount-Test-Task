@@ -14,7 +14,8 @@ public class ReceiptsDBController extends AbstractDBController<Receipt, Long> {
         super();
     }
 
-    private void addResultsToList(ResultSet rs, List<Receipt> out) throws SQLException {
+    @Override
+    protected void addResultsToList(ResultSet rs, List<Receipt> out) throws SQLException {
 
         while (rs.next()){
             out.add( new Receipt(

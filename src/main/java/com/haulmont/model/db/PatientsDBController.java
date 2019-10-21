@@ -10,7 +10,8 @@ public class PatientsDBController extends AbstractDBController<Patient, Long> {
 
     public PatientsDBController(){ super(); }
 
-    private void addResultsToList(ResultSet rs, List<Patient> out) throws SQLException {
+    @Override
+    protected void addResultsToList(ResultSet rs, List<Patient> out) throws SQLException {
 
         while (rs.next()){
 
